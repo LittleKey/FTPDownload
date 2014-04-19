@@ -3,7 +3,7 @@ FTPDownload
 
    自动从ftp下载(主要用于：尚未更新的)ts
 
-------------------------
+
 
 ### Requirements
 
@@ -13,7 +13,7 @@ FTPDownload
 ------------------------
 ### Usage
 
-   FTPDownload.py AnimeName [num] [-t TV]
+   > FTPDownload.py AnimeName [num] [-t TV]
 
 ##### AnimeName
    动画名
