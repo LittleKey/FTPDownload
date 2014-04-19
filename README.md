@@ -1,9 +1,10 @@
 FTPDownload
 ===========
 
-   自动从ftp下载(主要用于：尚未更新的)ts
-
    ![LittleKey](https://github.com/LittleKey/gallery/blob/master/MyPic.png?raw=true)
+
+   [I've special develop document.](https://github.com/LittleKey/FTPDownload/blob/master/src/README.md)
+
 
 
 ### Requirements
