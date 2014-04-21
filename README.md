@@ -18,12 +18,12 @@ FTPDownload
    > FTPDownload.py AnimeName [num] [-t TV]
 
 ##### AnimeName
-   动画名
+    动画名
 
 ##### num [dafault: 0]
     指定要下集数的范围
     下载集数的范围是[num-last]
-   
+
    >p.s: 只会下最新一集
 
 ##### -t
@@ -38,7 +38,7 @@ FTPDownload
 
     v0.1: first release.
 
-    v0.2: fix code struct.    
+    v0.2: fix code struct.
 
     v0.3: update interactive.
 
