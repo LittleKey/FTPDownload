@@ -37,10 +37,10 @@ def AnimeMatch(animeName, context): #如果有匹配到ts则返回[(大小, 集�
 def LastAnimeGet(animeName, TV, context): # 获取最新一集的ts
 	if TV:
 		# 按电视台和集数，从小到大升序排序
-		rlt = sorted(AnimeMatch(animeName, context), key=lambda t: t[1] and t[2].upper() == TV.upper()) 
+		rlt = sorted(AnimeMatch(animeName, context), key=lambda t: t[1] and t[2].upper() == TV.upper())
 	else:
 		# 按集数，从小到大升序排序
-		rlt = sorted(AnimeMatch(animeName, context), key=lambda t: t[1]) 
+		rlt = sorted(AnimeMatch(animeName, context), key=lambda t: t[1])
 
 	if rlt:
 		#print(rlt[-1])
@@ -60,7 +60,7 @@ def Clear(*args):
 		except NotImplementedError:
 			print("Your platform not support remove.")
 			return -1
-	
+
 
 class FTP:
 	def __init__(self, host, user, password, CM_Login=settings.CM_ftp_Login, CM_Execute=settings.CM_Execute):
@@ -81,7 +81,9 @@ class FTP:
 			with open(LOG_Filename, encoding='utf-8') as logFile:
 				return logFile.read()
 		except FileNotFoundError:
-			print("[IOError]: No such file or directory: {}".format(filename))
+			print("[IOError]: No such file or directory: {}".format(logFile))
+
+        return ''
 
 	def __Connect(self, CM_Login): # 待优化
 
@@ -103,7 +105,7 @@ class FTP:
 	def TSGet(self, filename, \
 			  args, \
 			  CM=settings.CM_ts_Get, CM_Filename=settings.CONF_Filename):
-		
+
 		with open(CM_Filename, 'w') as outputFile:
 			outputFile.write(self.CM)
 			outputFile.write(settings.CM_ts_Download_Dir) # 设置下载目录，需要放在下载命令前
@@ -158,7 +160,7 @@ def main(animeName, lastNum=0, STV='', ftpConf=settings.FTP_Conf_File):
 	ftp = FTP(host, account, password)
 
 	#animeName = r'blade_and_soul'
-	
+
 	tsList = GetTSList(ftp)
 	try:
 		size, num, TV = LastAnimeGet(animeName, STV, tsList) # 获取最新一集动画的集数与大小

@@ -45,7 +45,7 @@ ver: {Version}
 
     -t
     	指定要选择的电视台
-    
+
     TV [default: '']
     	电视台名
 
@@ -54,7 +54,7 @@ ver: {Version}
         first release.
 
     v0.2
-        fix code struct.    
+        fix code struct.
 
     v0.3
     	update interactive.
@@ -67,7 +67,7 @@ ver: {Version}
 
     v1.0
     	debug: if TS's filename have TV, but not select TV in args that will don't download anything.
-    	
+
 """.format(Author=__Author__, Version=__Version__)
 
 from main import main
@@ -99,7 +99,7 @@ if __name__ == '__main__':
 			else:
 				print(__doc__)
 				exit(-1)
-			
+
 			if apple == 2:
 				break
 			elif apple == -1:

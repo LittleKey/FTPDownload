@@ -9,7 +9,7 @@
 
 class Filename:
 	def __init__(self, head='', foot='', middleWare='', stringList=[]):
-		r"""if middleWare is '_', output: head_string1_string2..._stringNfoot""" 
+		r"""if middleWare is '_', output: head_string1_string2..._stringNfoot"""
 		self.out = head
 		self.middleWare = middleWare
 
@@ -18,7 +18,7 @@ class Filename:
 
 		self.out += foot
 
-	def __MiddleWare(self, string):	
+	def __MiddleWare(self, string):
 		if string != '':
 			self.out += self.middleWare + string
 
