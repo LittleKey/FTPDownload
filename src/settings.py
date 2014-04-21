@@ -39,34 +39,5 @@ set PYTHONIOENCODING=utf8
 lftp -f "{CONF_Filename}" > "{LOG_Filename}"
 """.format(LFTP_DIR=LFTP_DIR, CONF_Filename=basename(CONF_Filename), LOG_Filename=LOG_Filename)
 
-
-# 指定ts下载目录的命令
-CM_ts_Download_Dir = \
-r"""
-lcd {Download_Dir}
-""".format(Download_Dir=Download_Dir)
-
-# 获取ts文件列表的命令
-CM_ts_List = \
-r"""
-ls -l
-"""
-
-# 获取ts文件的命令
-CM_ts_Get = \
-r"""
-pget {args} {filename}
-"""
-
-# pget 续传文件的命令的参数
-ARGS_Continue_ts_Get = r"-c -n 10"
-
-# pget 新下载文件的命令的参数
-ARGS_New_ts_Get = r"-n 10"
-
-# FTP登陆命令
-CM_ftp_Login = \
-r"""
-lftp {host}
-login {user} {passwd}
-"""
+def ProcessorFactory():
+    pass
