@@ -8,7 +8,7 @@
 ################
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '1.3'
+__Version__ = '1.2'
 __doc__ = \
 r"""
 #####################
