@@ -14,7 +14,7 @@ from os.path import exists
 
 # lftp所在的目录(必填, 后面的设置可以不改动)
 # 如果把lftp添加到了环境变量里应该连这个也不用设置了( 尚未测试
-LFTP_DIR = abspath(r'.')
+LFTP_DIR = abspath(r'C:\cygwin\bin')
 
 #======================================================================================#
 # FTP 信息(host, user, passwd)....请妥善保管...
@@ -68,6 +68,9 @@ ARGS_Continue_ts_Get = r"-c -n 10"
 
 # pget 新下载文件的命令的参数
 ARGS_New_ts_Get = r"-n 10"
+
+# lftp 下载文件命令
+CM_LFTP_Get_File = CM_ts_Download_Dir + CM_ts_Get
 
 # FTP登陆命令
 CM_ftp_Login = \

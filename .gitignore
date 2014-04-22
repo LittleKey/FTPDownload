@@ -56,3 +56,4 @@ docs/_build/
 *.ts.lftp-pget-status
 src/ __pycache__
 src/*.conf
+src/*.cmd

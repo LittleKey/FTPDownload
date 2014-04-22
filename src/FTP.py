@@ -73,11 +73,11 @@ class LFTP:
             print("[IOError]: No such file or directory: {}".format(logFile))
             return ''
 
-    def GetNewFile(self, filename, args='-n 10'):
-        self.processor(settings.CM_ts_Get.format(args=args, filename=filename))
+    def GetNewFile(self, filename, args=settings.ARGS_New_ts_Get):
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
 
-    def GetExistFile(self, filename, args='-n 10'):
-        self.processor(settings.CM_ts_Get.format(args='-c ' + args, filename=filename))
+    def GetExistFile(self, filename, args=settings.ARGS_Continue_ts_Get):
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
 
 
 class SelfFTP:

@@ -43,6 +43,7 @@ class Win32Processor:
         self.ftpLoginCM = ftpLoginCM
 
     def __Execute(self, filename=RandomCode()):
+        filename += '.cmd' # 后缀名坑爹
         with open(filename, 'w') as execFile:
             execFile.write(self.processorCM)
 
@@ -59,9 +60,10 @@ class Win32Processor:
         with open(filename, 'w') as confFile:
             confFile.write(self.ftpLoginCM)
             confFile.write(command)
-
-        self.__Execute()
-        self.__Clean(filename)
+        try:
+            self.__Execute()
+        finally:
+            self.__Clean(filename)
 
 
 
@@ -83,6 +85,7 @@ class LinuxProcessor:
         with open(filename, 'w') as confFile:
             confFile.write(self.ftpLoginCM)
             confFile.write(command)
-
-        self.__Execute()
-        self.__Clean(filename)
+        try:
+            self.__Execute()
+        finally:
+            self.__Clean(filename)
