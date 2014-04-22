@@ -1,4 +1,4 @@
 @echo off
 cd src
-FTPDownload.py Blade_and_Soul 04
+FTPDownload.py Aokihagane 05 -T MX
 pause

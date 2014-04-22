@@ -49,3 +49,5 @@ FTPDownload
     v1.0: debug: if TS's filename have TV, but not select TV in args that will don't download anything.
 
     v1.1: code refactoring.
+
+    v1.2: fix some bug.

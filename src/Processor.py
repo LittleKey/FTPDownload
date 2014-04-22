@@ -43,19 +43,21 @@ class Processor:
         except NotImplementedError:
             print("Your platfrom not support remove.")
 
-    def __call__(self, command, filename):
+    def call(self, command, filename):
         with open(filename, 'w') as confFile:
             confFile.write(self.ftpLoginCM)
             confFile.write(command)
-
-        self.__Execute()
-        self.__Clean(filename)
+        try:
+            self.__Execute()
+        finally:
+            self.__Clean(filename)
 
 class Win32Processor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
         self.__init__(ftpLoginCM, processorCM)
 
     def __Execute(self, filename=RandomCode()):
+        filename = filename + '.cmd'
         with open(filename, 'w') as execFile:
             execFile.write(self.processorCM)
 
@@ -63,7 +65,7 @@ class Win32Processor(Processor):
         self.__Clean(filename)
 
     def __call__(self, command, filename=settings.CONF_Filename):
-        self.__call__(command, filename)
+        self.call(command, filename)
 
 
 
@@ -75,4 +77,4 @@ class LinuxProcessor(Processor):
         system(self.processorCM)
 
     def __call__(self, command, filename=basename(settings.CONF_Filename)):
-        self.__call__(command, filename)
+        self.call(command, filename)

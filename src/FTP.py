@@ -27,25 +27,12 @@ class FTP:
     def GetList(self):
         pass
 
-    def GetFile(self, filename, fileSize, downloadDIR=settings.Download_Dir):
-        for cfile in os.listdir(downloadDIR):
-            if filename.lower() == cfile.lower():
-                if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(fileSize):
-                    # 文件已存在，下载已完成
-                    print("Download end.")
-                    return 2
-                else:
-                    # 文件已存在，继续下载
-                    print("Continue download...")
-                    self.ftp.GetExistFile(filename) # 10线程 续传
-                    return 0
-        # 文件不存在，开始下载ts
-        print("New download...")
-        self.ftp.GetNewFile(filename)
-        return 0
+    def GetFile(self, filename, filesize, downloadDIR):
+        pass
 
 
 class LFTP(FTP):
+    r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
         self.__init__(ftpInfo)
 
@@ -63,7 +50,7 @@ class LFTP(FTP):
                 passwd = ftpInfo['passwd']
             )
         if ftpInfo['ssh'] == "TLS_V1" or ftpInfo['ssh'] == "SSL_V3":
-            loginCM += settings.CM_ftp_Login_TLS_V1
+            loginCM += settings.CM_ftp_Login_TLS_V1  # 添加TLS_V1验证设置。。。
 
         return loginCM
 
@@ -79,11 +66,30 @@ class LFTP(FTP):
             print("[IOError]: No such file or directory: {}".format(logFile))
             return ''
 
-    def GetNewFile(self, filename, args='-n 10'):
-        self.processor(settings.CM_ts_Get.format(args=args, filename=filename))
+    def __GetNewFile(self, filename):
+        args = settings.ARGS_New_ts_Get
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
 
-    def GetExistFile(self, filename, args='-n 10'):
-        self.processor(settings.CM_ts_Get.format(args='-c ' + args, filename=filename))
+    def __GetExistFile(self, filename):
+        args = settings.ARGS_Continue_ts_Get
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
+
+    def GetFile(self, filename, filesize, downloadDIR=settings.Download_Dir):
+        for cfile in os.listdir(downloadDIR):
+            if filename.lower() == cfile.lower():
+                if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
+                    # 文件已存在，下载已完成
+                    print("Download end.")
+                    return 2
+                else:
+                    # 文件已存在，继续下载
+                    print("Continue download...")
+                    self._GetExistFile(filename) # 10线程 续传
+                    return 0
+        # 文件不存在，开始下载ts
+        print("New download...")
+        self.__GetNewFile(filename)
+        return 0
 
 
 class SelfFTP:
