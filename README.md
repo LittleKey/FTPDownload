@@ -51,3 +51,5 @@ FTPDownload
     v1.1: code refactoring.
 
     v1.2: fix some bug.
+
+    v2.0: code refactoring.

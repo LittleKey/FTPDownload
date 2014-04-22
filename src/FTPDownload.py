@@ -8,7 +8,7 @@
 ################
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '1.2'
+__Version__ = '2.0'
 __doc__ = \
 r"""
 #####################
@@ -73,6 +73,9 @@ ver: {Version}
 
     v1.2
         fix some bug.
+
+    v2.0
+        code refacoring.
 
 """.format(Author=__Author__, Version=__Version__)
 

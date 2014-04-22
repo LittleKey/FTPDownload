@@ -35,26 +35,23 @@ class Processor:
         self.ftpLoginCM = ftpLoginCM
 
     def __Execute(self):
-        pass
+        raise NotImplementedError
 
     def __Clean(self, filename):
+        raise NotImplementedError
+
+    def _Clean(self, filename):
         try:
             remove(filename)
         except NotImplementedError:
             print("Your platfrom not support remove.")
 
-    def call(self, command, filename):
-        with open(filename, 'w') as confFile:
-            confFile.write(self.ftpLoginCM)
-            confFile.write(command)
-        try:
-            self.__Execute()
-        finally:
-            self.__Clean(filename)
+    def __call__(self, command, filename):
+        raise NotImplementedError
 
 class Win32Processor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
-        self.__init__(ftpLoginCM, processorCM)
+        super(Win32Processor, self).__init__(ftpLoginCM, processorCM)
 
     def __Execute(self, filename=RandomCode()):
         filename = filename + '.cmd'
@@ -64,17 +61,35 @@ class Win32Processor(Processor):
         call([filename])
         self.__Clean(filename)
 
+    def __Clean(self, filename):
+        super(Win32Processor, self)._Clean(filename)
+
     def __call__(self, command, filename=settings.CONF_Filename):
-        self.call(command, filename)
+        with open(filename, 'w') as confFile:
+            confFile.write(self.ftpLoginCM)
+            confFile.write(command)
+        try:
+            self.__Execute()
+        finally:
+            self.__Clean(filename)
 
 
 
 class LinuxProcessor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Linux):
-        self.__init__(ftpLoginCM, processorCM)
+        super(LinuxProcessor, self).__init__(ftpLoginCM, processorCM)
 
     def __Execute(self):
         system(self.processorCM)
 
+    def __Clean(self, filename):
+        super(LinuxProcessor, self)._Clean(filename)
+
     def __call__(self, command, filename=basename(settings.CONF_Filename)):
-        self.call(command, filename)
+        with open(filename, 'w') as confFile:
+            confFile.write(self.ftpLoginCM)
+            confFile.write(command)
+        try:
+            self.__Execute()
+        finally:
+            self.__Clean(filename)

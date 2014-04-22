@@ -23,18 +23,19 @@ class FTP:
     def __init__(self, ftpInfo):
         if type(ftpInfo) is not FtpInfo:
             raise TypeError
+        self.ftpInfo = ftpInfo
 
     def GetList(self):
-        pass
+        raise NotImplementedError
 
     def GetFile(self, filename, filesize, downloadDIR):
-        pass
+        raise NotImplementedError
 
 
 class LFTP(FTP):
     r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
-        self.__init__(ftpInfo)
+        super(LFTP, self).__init__(ftpInfo)
 
         self.processor = self.__SetProcessor(ftpInfo)
 
@@ -63,7 +64,7 @@ class LFTP(FTP):
             with open(settings.LOG_Filename, encoding='utf-8') as logFile:
                 return logFile.read()
         except FileNotFoundError:
-            print("[IOError]: No such file or directory: {}".format(logFile))
+            print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             return ''
 
     def __GetNewFile(self, filename):
@@ -84,7 +85,7 @@ class LFTP(FTP):
                 else:
                     # 文件已存在，继续下载
                     print("Continue download...")
-                    self._GetExistFile(filename) # 10线程 续传
+                    self.__GetExistFile(filename) # 10线程 续传
                     return 0
         # 文件不存在，开始下载ts
         print("New download...")
@@ -92,6 +93,6 @@ class LFTP(FTP):
         return 0
 
 
-class SelfFTP:
-    def __init__(self):
-        pass
+class SelfFTP(FTP):
+    def __init__(self, ftpInfo):
+        super(SelfFTP, self).__init__(ftpInfo)
