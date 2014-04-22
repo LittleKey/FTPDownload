@@ -8,7 +8,7 @@
 ################
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '2.0'
+__Version__ = '2.1'
 __doc__ = \
 r"""
 #####################
@@ -77,16 +77,30 @@ ver: {Version}
     v2.0
         code refacoring.
 
+    v2.1
+        update. add python version check
+
 """.format(Author=__Author__, Version=__Version__)
 
 from main import main
 from main import Clear
-from time import sleep
 from sys import argv
 import settings
+from sys import version_info
 
+
+def CheckVersion():
+    pyver_local = version_info[:3]
+    pyver_need = (3, 3, 5)
+
+    return pyver_local < pyver_need
 
 if __name__ == '__main__':
+    if CheckVersion():
+        print("[VersionError]: Your Python version is {}".format(\
+                                            '.'.join(map(str, version_info[:3]))))
+        exit(-1)
+
     apple = 0
     TV = ''
     try:
