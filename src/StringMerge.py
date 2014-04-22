@@ -3,11 +3,11 @@
 
 ##############################
 #			                 #
-#  我有特别的文件名合成技巧  #
+#  我有特别的字符串合成技巧  #
 #			                 #
 ##############################
 
-class Filename:
+class StringMerge:
 	def __init__(self, head='', foot='', middleWare='', stringList=[]):
 		r"""if middleWare is '_', output: head_string1_string2..._stringNfoot"""
 		self.out = head
@@ -25,7 +25,3 @@ class Filename:
 	def Return(self):
 		return self.out
 
-
-if __name__ == '__main__':
-	print(Filename(head='blade_and_soul', foot='.ts', middleWare='_', stringList=['01', 'TBS']).Return())
-	input()
