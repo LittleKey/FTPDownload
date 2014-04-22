@@ -28,7 +28,7 @@ ver: {Version}
 
 
 [Requirements]
-    Python 3.4.0 (or more later)
+    Python 3.3.5 (or more later)
     lftp (need cygwin for windows)
 
 [USAGE]
@@ -84,8 +84,6 @@ import settings
 
 
 if __name__ == '__main__':
-    #Clear("w@i@n@dr@a@i@n.cmd", settings.CONF_Filename, settings.LOG_Filename)
-    #exit(0)
     apple = 0
     TV = ''
     try:
@@ -93,7 +91,6 @@ if __name__ == '__main__':
             num = argv.index('-T')
             del argv[num]
             TV = argv.pop(num)
-            #print(TV)
 
         if len(argv) == 3:
             main(argv[1], int(argv[2]), TV=TV)

@@ -49,6 +49,7 @@ class FTP:
 
 
 class LFTP:
+    r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
         if type(ftpInfo) is not FtpInfo:
             raise TypeError
@@ -59,7 +60,7 @@ class LFTP:
                 passwd = ftpInfo['passwd']
             )
         if ftpInfo['ssh'] == "TLS_V1" or ftpInfo['ssh'] == "SSL_V3":
-            loginCM += settings.CM_ftp_Login_TLS_V1
+            loginCM += settings.CM_ftp_Login_TLS_V1  # 添加TLS_V1验证设置。。。
 
         self.processor = ProcessorFactory(loginCM).GetProcessor()
 

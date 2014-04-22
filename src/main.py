@@ -18,8 +18,8 @@ from StringMerge import StringMerge
 from time import sleep
 
 
-class CK_BaS:
-    def __init__(self, animeName=r'Blade_and_Soul', num=0, TV='TBS'):
+class CK:
+    def __init__(self, animeName, num=0, TV=''):
         self.animeInfo = {
                 'name': animeName,
                 'num': int(num),
@@ -44,6 +44,7 @@ class CK_BaS:
         #    print("{}, {}, {}, {}".format(host, account, password, SSH))
 
         if SSH == '':
+            # SSh默认为TLS_V1
             SSH = "TLS_V1"
 
         return FtpInfo(host=host, user=account, passwd=password, ssh=SSH)
@@ -53,18 +54,22 @@ class CK_BaS:
         self.ftp = FTP(ftpInfo)
 
     def SetSelector(self, match=r'group   (\d.*) \w+\w+\w+.*? {}_?(\d*)_?(.*?)\.ts'):
+        r"""使用正则表达式进行匹配，目前默认的RE只用于处理CK片源服的ts list"""
 # 大小, 集数, 电视台
         self.selector = Selector(match.format(self.animeInfo['name']))
 
     def __Download(self, filename, size, downloadDir=settings.Download_Dir):
         flag = 0
         while flag != 2:
+            # 直到下载完成前会一直循环。。。出问题了的话就强关吧。。。
             flag = self.ftp.GetFile(filename, size, downloadDir)
 
     def __GettsList(self):
+        r"""获取指定名字的ts list"""
         return self.selector.Findall(self.ftp.GetList())
 
     def Listen(self, num=True, TV=False):
+        r"""监听"""
         while True:
             basList = self.__GettsList()
 # 过滤器
@@ -106,9 +111,9 @@ def Clear(*args):
             return -1
 
 def main(animeName, num=0, TV=''):
-    bas = CK_BaS(animeName, num, TV)
-    bas.SetFtp()
-    bas.SetSelector()
+    ck = CK(animeName, num, TV)
+    ck.SetFtp()
+    ck.SetSelector()
 
     TV = not not TV
-    bas.Listen(TV=TV)
+    ck.Listen(TV=TV)
