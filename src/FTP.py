@@ -21,14 +21,11 @@ class FTPFactory:
 class FTP:
     """其实这应该是抽象类...WTF!!"""
     def __init__(self, ftpInfo):
-        self.ftp = FTPFactory(ftpInfo).GetFTP()
+        if type(ftpInfo) is not FtpInfo:
+            raise TypeError
 
     def GetList(self):
-        print("Get list...")
-        fileList = self.ftp.GetList()
-        print("Got list.")
-
-        return fileList
+        pass
 
     def GetFile(self, filename, fileSize, downloadDIR=settings.Download_Dir):
         for cfile in os.listdir(downloadDIR):
@@ -48,11 +45,18 @@ class FTP:
         return 0
 
 
-class LFTP:
+class LFTP(FTP):
     def __init__(self, ftpInfo):
-        if type(ftpInfo) is not FtpInfo:
-            raise TypeError
+        self.__init__(ftpInfo)
 
+        self.processor = self.__SetProcessor(ftpInfo)
+
+    def __SetProcessor(self,ftpInfo):
+        loginCM = self.__GetLoginCM(ftpInfo)
+
+        return ProcessorFactory(loginCM).GetProcessor()
+
+    def __GetLoginCM(self, ftpInfo):
         loginCM = settings.CM_ftp_Login.format(
                 host   = ftpInfo['host'],
                 user   = ftpInfo['user'],
@@ -61,10 +65,12 @@ class LFTP:
         if ftpInfo['ssh'] == "TLS_V1" or ftpInfo['ssh'] == "SSL_V3":
             loginCM += settings.CM_ftp_Login_TLS_V1
 
-        self.processor = ProcessorFactory(loginCM).GetProcessor()
+        return loginCM
 
     def GetList(self):
+        print("Get list...")
         self.processor(settings.CM_ts_List)
+        print("Got list.")
 
         try:
             with open(settings.LOG_Filename, encoding='utf-8') as logFile:

@@ -30,17 +30,30 @@ class ProcessorFactory:
             raise SystemError
 
 class Processor:
-    """抽象类什么的...有存在的必要吗!!"""
-    def __init__(self):
-        pass
-
-    def __call__(self):
-            pass
-
-class Win32Processor:
-    def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
+    def __init__(self, ftpLoginCM, processorCM):
         self.processorCM = processorCM
         self.ftpLoginCM = ftpLoginCM
+
+    def __Execute(self):
+        pass
+
+    def __Clean(self, filename):
+        try:
+            remove(filename)
+        except NotImplementedError:
+            print("Your platfrom not support remove.")
+
+    def __call__(self, command, filename):
+        with open(filename, 'w') as confFile:
+            confFile.write(self.ftpLoginCM)
+            confFile.write(command)
+
+        self.__Execute()
+        self.__Clean(filename)
+
+class Win32Processor(Processor):
+    def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
+        self.__init__(ftpLoginCM, processorCM)
 
     def __Execute(self, filename=RandomCode()):
         with open(filename, 'w') as execFile:
@@ -49,40 +62,17 @@ class Win32Processor:
         call([filename])
         self.__Clean(filename)
 
-    def __Clean(self, filename):
-        try:
-            remove(filename)
-        except NotImplementedError:
-            print("Your platfrom not support remove.")
-
     def __call__(self, command, filename=settings.CONF_Filename):
-        with open(filename, 'w') as confFile:
-            confFile.write(self.ftpLoginCM)
-            confFile.write(command)
-
-        self.__Execute()
-        self.__Clean(filename)
+        self.__call__(command, filename)
 
 
 
-class LinuxProcessor:
+class LinuxProcessor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Linux):
-        self.processorCM = processorCM
-        self.ftpLoginCM = ftpLoginCM
+        self.__init__(ftpLoginCM, processorCM)
 
     def __Execute(self):
         system(self.processorCM)
 
-    def __Clean(self, filename):
-        try:
-            remove(filename)
-        except NotImplementedError:
-            print("Your platfrom not support remove.")
-
     def __call__(self, command, filename=basename(settings.CONF_Filename)):
-        with open(filename, 'w') as confFile:
-            confFile.write(self.ftpLoginCM)
-            confFile.write(command)
-
-        self.__Execute()
-        self.__Clean(filename)
+        self.__call__(command, filename)
