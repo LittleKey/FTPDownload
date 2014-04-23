@@ -16,6 +16,8 @@ Develop README
    * 使用Qt库
 
 
+         1. 使用QProcess 运行后端程序并进行通信
+
 > 待补充
 
 ##### 摆脱对lftp的依赖

@@ -49,37 +49,6 @@ ver: {Version}
     TV [default: '']
         电视台名
 
-[ChangeLog]
-    v0.1
-        first release.
-
-    v0.2
-        fix code struct.
-
-    v0.3
-        update interactive.
-
-    v0.4
-        add ts download dir setting，I've special input passwd technique. update~
-
-    v0.5
-        add '-t' argument, add it when you want to select whice TV.
-
-    v1.0
-        debug: if TS's filename have TV, but not select TV in args that will don't download anything.
-
-    v1.1
-        code refactoring.
-
-    v1.2
-        fix some bug.
-
-    v2.0
-        code refacoring.
-
-    v2.1
-        update. add python version check
-
 """.format(Author=__Author__, Version=__Version__)
 
 from main import main

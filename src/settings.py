@@ -17,16 +17,23 @@ from os.path import exists
 LFTP_DIR = abspath(r'c:/cygwin/bin')
 
 #======================================================================================#
-# FTP 信息(host, user, passwd)....请妥善保管...
+# FTP 信息(host, user, passwd[, ssh])....请妥善保管...
+# 这是可选设置，如果没有找到设置文件 则会要求(从标准输入)手动输入
 FTP_Conf_File = abspath(r'ac.conf')
 FTP_Conf_File = exists(FTP_Conf_File) and FTP_Conf_File or ''
 
-# ts下载目录 [default: 程序所在目录]
+# 文件下载目录 [default: 执行程序所在目录]
 Download_Dir = abspath(r'.')
+
+# FTP 指定需要获取的文件列表的目录[default: '.']
+FTP_FileList_Dir = r'.' # 一般来说是支持通配符的。。。
+
+# 下面的命令可以不用改，或者说改了也没多大用。。。还有可能会出问题
+#======================================================================================#
 
 # ts list (伪)Log文件的输出地址
 LOG_Filename = abspath(r'./tsList.log')
-# ftp配置文件的输出地址
+# lftp 命令文件的输出地址
 CONF_Filename = abspath(join(LFTP_DIR, r'_lftp.conf'))
 
 
@@ -54,8 +61,8 @@ lcd {Download_Dir}
 # 获取ts文件列表的命令
 CM_ts_List = \
 r"""
-ls -l
-"""
+ls -l {Dir}
+""".format(Dir=FTP_FileList_Dir)
 
 # 获取ts文件的命令
 CM_ts_Get = \

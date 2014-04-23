@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 #encoding: utf-8
 
-__Author__ = 'LittleKey'
-__Version__ = '2.2'
-__doc__ = \
-"""
-FTP downloader
-"""
-
 import os
 import settings
 from StringMerge import StringMerge
