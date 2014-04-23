@@ -5,6 +5,7 @@ import settings
 from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
+from subprocess import call
 
 
 class FTPFactory:
@@ -15,7 +16,17 @@ class FTPFactory:
         self.ftpInfo = ftpInfo
 
     def GetFTP(self):
-        return LFTP(self.ftpInfo)
+        # 暂时只有这一个FTP实现，所以这样写了...
+        try:
+            print("Get lftp version...\n")
+            call([os.path.join(settings.LFTP_DIR, 'lftp'), '--version'])
+            return LFTP(self.ftpInfo)
+        except FileNotFoundError:
+            print("[FileNotFoundError]: No found lftp")
+            exit(0)
+        finally:
+            print("\n")
+
 
 
 class FTP:

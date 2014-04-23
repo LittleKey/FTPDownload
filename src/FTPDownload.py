@@ -118,4 +118,4 @@ if __name__ == '__main__':
             exit(-1)
 
     finally:
-        Clear(settings.CONF_Filename, settings.LOG_Filename)
+        Clear(settings.LOG_Filename)
