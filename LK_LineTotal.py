@@ -12,8 +12,8 @@ def GetFileList(cdir):
 
 def GetDirList(cdir):
     if cdir:
-        currentDirs = filter(lambda t: os.path.isdir(t), \
-            map(lambda t: os.path.join(cdir, t), os.listdir(cdir)))
+        currentDirs = list(filter(lambda t: os.path.isdir(t), \
+            map(lambda t: os.path.join(cdir, t), os.listdir(cdir))))
 # 获取子目录
         for cDir in currentDirs:
             currentDirs += GetDirList(cDir)
@@ -33,8 +33,12 @@ def CountOneDir(inputDir):
 
     total = 0
     for filename in absFileList:
-        with open(filename) as aFile:
-            total += len(list(aFile.readlines()))
+        try:
+            with open(filename, encoding='utf-8') as aFile:
+                total += len(list(aFile.readlines()))
+        except UnicodeDecodeError:
+            print("[IOError]: Can't open file '{}'.".format(filename))
+                
 
     return total
 
