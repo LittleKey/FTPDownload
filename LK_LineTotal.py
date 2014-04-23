@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 import sys
@@ -11,14 +11,13 @@ def GetFileList(cdir):
     return filter(lambda t: os.path.isfile(os.path.join(cdir, t)), os.listdir(cdir))
 
 def GetDirList(cdir):
-    if cdir:
-        currentDirs = list(filter(lambda t: os.path.isdir(t), \
-            map(lambda t: os.path.join(cdir, t), os.listdir(cdir))))
+    currentDirs = list(filter(lambda t: os.path.isdir(t), \
+        map(lambda t: os.path.join(cdir, t), os.listdir(cdir))))
 # 获取子目录
-        for cDir in currentDirs:
-            currentDirs += GetDirList(cDir)
+    for cDir in currentDirs:
+        currentDirs += GetDirList(cDir)
 
-        return currentDirs
+    return currentDirs
 
 def CountOneDir(inputDir):
     fileList = GetFileList(inputDir)
@@ -62,7 +61,9 @@ if __name__ == '__main__':
 
 # 使用正则表达式匹配
     match = re.compile(expr, re.IGNORECASE)
-
+    if not os.path.exists(inputDir):
+        print("[FileNotFoundError]: No such file '{}'".format(inputDir))
+        exit(0)
     dirList = [inputDir]
     if rFlag:
 # 递归处理所以子目录(谨慎使用...)
