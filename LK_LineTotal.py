@@ -40,7 +40,7 @@ def CountOneDir(inputDir):
 
 if __name__ == '__main__':
     inputDir = '.'
-    rFlag = False
+    rFlag = False # 是否递归的flag
     try:
         num = sys.argv.index('-r')
         del sys.argv[num]
@@ -56,12 +56,13 @@ if __name__ == '__main__':
         print("[InputError]: Input arguments has errors..")
         exit(0)
 
+# 使用正则表达式匹配
     match = re.compile(expr, re.IGNORECASE)
 
-    dirList = []
+    dirList = [inputDir]
     if rFlag:
-        dirList = GetDirList(inputDir)
-    dirList.append(inputDir)
+# 递归处理所以子目录(谨慎使用...)
+        dirList += GetDirList(inputDir)
 
     total = 0
     for cdir in dirList:
