@@ -14,7 +14,7 @@ from os.path import exists
 
 # lftp所在的目录(必填, 后面的设置可以不改动)
 # 如果把lftp添加到了环境变量里应该连这个也不用设置了( 尚未测试
-LFTP_DIR = abspath(r'.')
+LFTP_DIR = abspath(r'c:/cygwin/bin')
 
 #======================================================================================#
 # FTP 信息(host, user, passwd)....请妥善保管...

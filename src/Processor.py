@@ -58,8 +58,10 @@ class Win32Processor(Processor):
         with open(filename, 'w') as execFile:
             execFile.write(self.processorCM)
 
-        call([filename])
-        self.__Clean(filename)
+        try:
+            call([filename])
+        finally:
+            self.__Clean(filename)
 
     def __Clean(self, filename):
         super(Win32Processor, self)._Clean(filename)
