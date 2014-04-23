@@ -27,7 +27,7 @@ class Listener:
             host = input("host: ")
             account = input("account: ")
             password = getpass("password: ")
-            SSH = input("SSH[default: TLS_V1]: ")
+            SSH = input("SSH: ")
 
         return FtpInfo(host=host, user=account, passwd=password, ssh=SSH)
 

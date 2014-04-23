@@ -61,7 +61,7 @@ class LFTP(FTP):
                 user   = ftpInfo['user'],
                 passwd = ftpInfo['passwd']
             )
-        if ftpInfo['ssh'] == "TLS_V1" or ftpInfo['ssh'] == "SSL_V3":
+        if ftpInfo['ssh'].upper() == "TLS_V1" or ftpInfo['ssh'].upper() == "SSL_V3":
             loginCM += settings.CM_ftp_Login_TLS_V1  # 添加TLS_V1验证设置。。。
 
         return loginCM
