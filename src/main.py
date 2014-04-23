@@ -2,7 +2,7 @@
 #encoding: utf-8
 
 __Author__ = 'LittleKey'
-__Version__ = '2.1'
+__Version__ = '2.2'
 __doc__ = \
 """
 FTP downloader

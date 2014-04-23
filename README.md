@@ -53,3 +53,7 @@ FTPDownload
     v1.2: fix some bug.
 
     v2.0: code refactoring.
+
+    v2.1: i'm forgot it...
+
+    v2.2: add lftp check...if you use this software in windows, you'll must set lftp's dir in settings.py file.
