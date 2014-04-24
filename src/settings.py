@@ -11,10 +11,17 @@ from os.path import basename
 from os.path import abspath
 from os.path import join
 from os.path import exists
+import platform
 
 # lftp所在的目录(必填, 后面的设置可以不改动)
 # 如果把lftp添加到了环境变量里应该连这个也不用设置了( 尚未测试
-LFTP_DIR = abspath(r'c:/cygwin/bin')
+if platform.system().lower() == "windows":
+    LFTP_DIR = abspath(r'c:/cygwin/bin')
+elif platform.system().lower() == "linux":
+    LFTP_DIR = abspath(r'/usr/bin')
+else:
+    print("[FileNotFoundError]: No found 'lftp'.")
+    exit(0)
 
 #======================================================================================#
 # FTP 信息(host, user, passwd[, ssh])....请妥善保管...
