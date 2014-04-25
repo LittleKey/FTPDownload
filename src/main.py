@@ -13,7 +13,7 @@ class CK:
         self.listener = Listener(match)
         self.animeInfo = {
                 'name': animeName,
-                'num': num,
+                'num': int(num),
                 'TV': TV
             }
 
@@ -33,10 +33,10 @@ class CK:
 
         return tsList
 
-    def Listen(self, num=True, TV=False):
+    def Listen(self, numFlag=True, TVFlag=False):
         r"""监听"""
         while True:
-            tsList = self.__Filter(self.listener.Listen(), num, TV)
+            tsList = self.__Filter(self.listener.Listen(), numFlag, TVFlag)
 
             if tsList:
                 size, num, TV = sorted(tsList, key=lambda t: t[1])[-1]
@@ -70,7 +70,8 @@ def Clear(*args):
             return -1
 
 def main(animeName, num=0, TV=''):
-    ck = CK(animeName, num, TV, match='group   (\d.*) \w+\w+\w+.*? {}_?(\d*)_?(.*?)\.ts'.format(animeName))
+    ck = CK(animeName, num, TV, match='group *?(\d.*) \w+\w+\w+.*? {}_?(\d*)_?(.*?)\.ts'.format(animeName))
 
     TV = not not TV
-    ck.Listen(TV=TV)
+    num = not not num
+    ck.Listen(numFlag=num, TVFlag=TV)

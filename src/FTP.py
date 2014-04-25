@@ -80,11 +80,13 @@ class LFTP(FTP):
 
     def __GetNewFile(self, filename):
         args = settings.ARGS_New_ts_Get
-        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename= \
+                                            os.path.join(settings.FTP_FileList_Dir, filename)))
 
     def __GetExistFile(self, filename):
         args = settings.ARGS_Continue_ts_Get
-        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename=filename))
+        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename= \
+                                            os.path.join(settings.FTP_FileList_Dir, filename)))
 
     def GetFile(self, filename, filesize, downloadDIR=settings.Download_Dir):
         for cfile in os.listdir(downloadDIR):
