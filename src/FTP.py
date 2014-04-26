@@ -10,7 +10,7 @@ from subprocess import call
 
 class FTPFactory:
     def __init__(self, ftpInfo):
-        if type(ftpInfo) is not FtpInfo:
+        if not isinstance(ftpInfo, FtpInfo):
             raise TypeError
 
         self.ftpInfo = ftpInfo
@@ -32,7 +32,7 @@ class FTPFactory:
 class FTP:
     """其实这应该是抽象类...WTF!!"""
     def __init__(self, ftpInfo):
-        if type(ftpInfo) is not FtpInfo:
+        if not isinstance(ftpInfo, FtpInfo):
             raise TypeError
         self.ftpInfo = ftpInfo
 
