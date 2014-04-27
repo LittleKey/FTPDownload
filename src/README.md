@@ -1,4 +1,4 @@
-Develop README
+﻿Develop README
 ==============
 
    开发文档(初稿)
@@ -7,6 +7,7 @@ Develop README
 
    * GUI
    * lftp
+   * code refactoring
 
 ##### GUI
 
@@ -31,5 +32,9 @@ Develop README
          1. 需要能进行ssl验证，即可以登陆有ssl验证的ftp
          2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
          3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
+
+##### GUI
+
+    重构后端， 'CK', 'Listen'的类之间的关系设计得不怎么好....重新弄一下才行
 
 ------------------
