@@ -1,4 +1,4 @@
-FTPDownload
+﻿FTPDownload
 ===========
 
    ![LittleKey](https://github.com/LittleKey/gallery/blob/master/MyPic.png?raw=true)
@@ -9,7 +9,7 @@ FTPDownload
 
 ### Requirements
 
-    Python 3.3.5 (or more later)
+    Python 3.3 (or more later)
     lftp (need cygwin for windows)
 
 ------------------------
