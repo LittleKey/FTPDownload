@@ -3,13 +3,13 @@
 本GUI屬於未完成品，大部份功能尚未實現，剩下的部份正在著手解決，說明部份也正在寫...
 
 
-Requirement : Python 3.3.5 + Qt 4.8.6
+依賴：Qt 4.8.6 (GUI本身純Qt所寫，Python腳本部份需要依賴Python3.3.5或者更高版本以及LFTP)
 
-OS : Xubuntu 14.04 x64
+試驗平臺：Xubuntu 14.04 x64
 
 如果你需要自己編譯的話：
 
-sudo apt-get install aptitude
+sudo apt-get install build-essential automake aptitude
 
 sudo aptitude install libqt4-dev libqt4-dbg libqt4-opengl-dev libc6 libc6-dev libqt4-gui libqt4-sql qt4-dev-tools qt4-doc qt4-designer qt4-qtconfig
 
