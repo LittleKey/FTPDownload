@@ -38,10 +38,10 @@ class Listener(Subject, _threading.Thread):
             ftpFileList = self.__GetList()
             if ftpFileList != self._localFileList:
                 self._localFileList = ftpFileList
-                super(Listener, self).Notify(self._localFileList)
-                break
-            else:
-                sleep(time)
+                #super(Listener, self).Notify(self._localFileList)
+                self.Notify(self._localFileList)
+
+            sleep(time)
 
     def run(self):
         self.Listen()

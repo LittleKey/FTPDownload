@@ -23,6 +23,7 @@ class Getor(Observer):
         flag = 0
         while flag != 2:
             flag = self._ftp.GetFile(filename, size, self._localDir, self._remoteDir)
+        exit(2)
 
     def Update(self, info):
         info = self._filter(info)
