@@ -36,7 +36,7 @@ class FTP:
             raise TypeError
         self.ftpInfo = ftpInfo
 
-    def GetList(self):
+    def GetList(self, fileListDir):
         raise NotImplementedError
 
     def GetFile(self, filename, filesize, downloadDIR):
@@ -66,9 +66,9 @@ class LFTP(FTP):
 
         return loginCM
 
-    def GetList(self):
+    def GetList(self, fileListDir):
         print("Get list...")
-        self.processor(settings.CM_ts_List)
+        self.processor(settings.CM_ts_List.format(Dir=fileListDir))
         print("Got list.")
 
         try:
@@ -78,17 +78,15 @@ class LFTP(FTP):
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             return ''
 
-    def __GetNewFile(self, filename):
+    def __GetNewFile(self, filename, downloadDIR):
         args = settings.ARGS_New_ts_Get
-        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename= \
-                                            os.path.join(settings.FTP_FileList_Dir, filename)))
+        self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
 
-    def __GetExistFile(self, filename):
+    def __GetExistFile(self, filename, downloadDIR):
         args = settings.ARGS_Continue_ts_Get
-        self.processor(settings.CM_LFTP_Get_File.format(args=args, filename= \
-                                            os.path.join(settings.FTP_FileList_Dir, filename)))
+        self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
 
-    def GetFile(self, filename, filesize, downloadDIR=settings.Download_Dir):
+    def GetFile(self, filename, filesize, downloadDIR):
         for cfile in os.listdir(downloadDIR):
             if filename.lower() == cfile.lower():
                 if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
@@ -98,11 +96,11 @@ class LFTP(FTP):
                 else:
                     # 文件已存在，继续下载
                     print("Continue download...")
-                    self.__GetExistFile(filename) # 10线程 续传
+                    self.__GetExistFile(filename, downloadDIR) # 10线程 续传
                     return 0
         # 文件不存在，开始下载ts
         print("New download...")
-        self.__GetNewFile(filename)
+        self.__GetNewFile(filename, downloadDIR)
         return 0
 
 
