@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+import settings
+from getpass import getpass
+
 
 class FtpInfo:
-    def __init__(self, host, user, passwd, ssh):
+    def __init__(self, host='', user='', passwd='', ssh=''):
         self.info = {
             'host':    host,
             'user':    user,
@@ -21,3 +24,30 @@ class FtpInfo:
             self.info[key] = value
         else:
             raise TypeError
+
+    def GetInfo(self):
+        try:
+            self.__GetInfoFromFile()
+        except FileNotFoundError:
+            self.__GetInfoFromInput()
+
+    def __GetInfoFromFile(self, ftpConf=settings.FTP_Conf_File):
+        # 从配置文件获取
+        with open(ftpConf) as ACFile:
+            self.info['host'] = ACFile.readline().strip()
+            self.info['user'] = ACFile.readline().strip()
+            self.info['passwd'] = ACFile.readline().strip()
+            self.info['ssh'] = ACFile.readline().strip()
+
+    def __GetInfoFromInput(self):
+        # 如果没有配置文件，则改为手动输入
+        self.info['host'] = input("host: ")
+        self.info['user'] = input("account: ")
+        self.info['passwd'] = getpass("password: ")
+        self.info['ssh'] = input("SSH: ")
+
+    def SetInfoFromFile(self):
+        self.__GetInfoFromFile()
+
+    def SetInfoFromInput(self):
+        self.__GetInfoFromInput()

@@ -1,49 +1,74 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 
 import settings
-from getpass import getpass
-from FtpInfo import FtpInfo
 from Select import Selector
-from FTP import FTPFactory
+from Subject import Subject
+from time import sleep
+from FTP import FTP
+try:
+    import threading as _threading
+except ImportError:
+    import dummy_threading as _threading
 
 
-class Listener:
-    def __init__(self, match=r'.*'):
-        self.__SetFtp()
+class Listener(Subject, _threading.Thread):
+    def __init__(self, ftp, match, fileListDir=settings.FTP_FileList_Dir):
+        if not isinstance(ftp, FTP):
+            raise TypeError
+
+        #super(Listener, self).__init__()
+        Subject.__init__(self)
+        _threading.Thread.__init__(self)
+
+        self._ftpFileListDir = fileListDir
+        self._localFileList = []
+        self._ftp = ftp
         self.__SetSelector(match)
 
-    def __GetFtpInfo(self, ftpConf):
-        try:
-            # 从配置文件获取
-            with open(ftpConf) as ACFile:
-                host = ACFile.readline().strip()
-                account = ACFile.readline().strip()
-                password = ACFile.readline().strip()
-                SSH = ACFile.readline().strip()
-        except FileNotFoundError:
-            # 如果没有配置文件，则改为手动输入
-            host = input("host: ")
-            account = input("account: ")
-            password = getpass("password: ")
-            SSH = input("SSH: ")
-
-        return FtpInfo(host=host, user=account, passwd=password, ssh=SSH)
-
-    def __SetFtp(self):
-        ftpInfo = self.__GetFtpInfo(settings.FTP_Conf_File)
-        self.ftp = FTPFactory(ftpInfo).GetFTP()
-
     def __SetSelector(self, match):
-        self.selector = Selector(match)
-
-    def Download(self, filename, size, downloadDir=settings.Download_Dir):
-        return self.ftp.GetFile(filename, size, downloadDir)
+        self._selector = Selector(match)
 
     def __GetList(self):
-        return self.selector.Findall(self.ftp.GetList())
+        return self._selector.Findall(self._ftp.GetList(self._ftpFileListDir))
 
-    def Listen(self):
-        return self.__GetList()
+    def Listen(self, time=5*60):
+        while True:
+            ftpFileList = self.__GetList()
+            if ftpFileList != self._localFileList:
+                self._localFileList = ftpFileList
+                super(Listener, self).Notify(self._localFileList)
+                break
+            else:
+                sleep(time)
 
+    def run(self):
+        self.Listen()
+
+    @property
+    def FtpFileListDir(self):
+        return self._ftpFileListDir
+
+    @FtpFileListDir.setter
+    def FtpFileListDir(self, value):
+        self._ftpFileListDir = value
+
+    #@property
+    #def FTP(self):
+    #    return self._ftp
+
+    #@FTP.setter
+    #def FTP(self, value):
+    #    if not isinstance(value, FTP):
+    #        raise TypeError
+
+    #    self._ftp = value
+
+    @property
+    def Selector(self):
+        return self._selector
+
+    @Selector.setter
+    def Selector(self, value):
+        self._selector = Selector(value)

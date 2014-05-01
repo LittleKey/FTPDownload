@@ -63,13 +63,13 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
 CM_ts_Download_Dir = \
 r"""
 lcd {Download_Dir}
-""".format(Download_Dir=Download_Dir)
+"""#.format(Download_Dir=Download_Dir)
 
 # 获取ts文件列表的命令
 CM_ts_List = \
 r"""
 ls -l {Dir}
-""".format(Dir=FTP_FileList_Dir)
+"""#.format(Dir=FTP_FileList_Dir)
 
 # 获取ts文件的命令
 CM_ts_Get = \

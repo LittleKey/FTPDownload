@@ -9,11 +9,12 @@ from subprocess import call
 
 
 class FTPFactory:
-    def __init__(self, ftpInfo):
+    def __init__(self, ftpInfo=FtpInfo()):
         if not isinstance(ftpInfo, FtpInfo):
             raise TypeError
 
         self.ftpInfo = ftpInfo
+        self.ftpInfo.GetInfo()
 
     def GetFTP(self):
         # 暂时只有这一个FTP实现，所以这样写了...
@@ -78,15 +79,17 @@ class LFTP(FTP):
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             return ''
 
-    def __GetNewFile(self, filename, downloadDIR):
+    def __GetNewFile(self, filename, downloadDIR, ftpDir):
         args = settings.ARGS_New_ts_Get
+        filename = os.path.join(ftpDir, filename)
         self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
 
-    def __GetExistFile(self, filename, downloadDIR):
+    def __GetExistFile(self, filename, downloadDIR, ftpDir):
         args = settings.ARGS_Continue_ts_Get
+        filename = os.path.join(ftpDir, filename)
         self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
 
-    def GetFile(self, filename, filesize, downloadDIR):
+    def GetFile(self, filename, filesize, downloadDIR, ftpDir):
         for cfile in os.listdir(downloadDIR):
             if filename.lower() == cfile.lower():
                 if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
@@ -96,11 +99,11 @@ class LFTP(FTP):
                 else:
                     # 文件已存在，继续下载
                     print("Continue download...")
-                    self.__GetExistFile(filename, downloadDIR) # 10线程 续传
+                    self.__GetExistFile(filename, downloadDIR, ftpDir) # 10线程 续传
                     return 0
         # 文件不存在，开始下载ts
         print("New download...")
-        self.__GetNewFile(filename, downloadDIR)
+        self.__GetNewFile(filename, downloadDIR, ftpDir)
         return 0
 
 
