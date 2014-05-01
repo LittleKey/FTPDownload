@@ -9,6 +9,7 @@
    * more ftp client support
    * code refactoring
    * add N:N support
+   * update usage
 
 ##### GUI
 
@@ -29,18 +30,29 @@
    * 最好使用Python开发
 
 
-   
+
          1. 需要能进行ssl验证，即可以登陆有ssl验证的ftp
          2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
          3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
 
 ##### Code refactoring
 
-    重构后端， 'CK', 'Listen'的类之间的关系设计得不怎么好....重新弄一下才行
+   重构后端， 'CK', 'Listen'的类之间的关系设计得不怎么好....重新弄一下才行
 
 ##### Add N:N support
 
-    添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
+   添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
+
+    现在的设计是:使用listener与getor配合,监视与下载文件.
+        * 每个listener可以监视一个文件.
+        * 每个getor可以同时下载多个文件(估计是的...0r2)
+        * 一个listener可以对应多个getor(意义不明...0r2)
+        * 一个getor可以对应多个listener(所以可以实现同时多个文件的监视)
+
+##### Update usage
+
+   使用方式待改进啊~ 不知什么时候又要重构了...有点烦...0r2
+
 
 > 待补充
 
