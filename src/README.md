@@ -37,7 +37,7 @@
 
 ##### Code refactoring
 
-   重构后端， 'CK', 'Listen'的类之间的关系设计得不怎么好....重新弄一下才行
+> 未完待续
 
 ##### Add N:N support
 
