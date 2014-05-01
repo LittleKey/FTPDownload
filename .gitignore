@@ -64,3 +64,4 @@ gui/moc_*.cpp
 gui/qrc_*.o
 gui/qrc_*.cpp
 gui/FTPDownloader
+gui/Makefile
