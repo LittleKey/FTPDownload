@@ -26,7 +26,7 @@ class ProcessorFactory:
         elif sysstr == 'windows':
             return Win32Processor(self.ftpLoginCM)
         else:
-            print("Not support {} platfrom.".format(sysstr))
+            print("Not support '{}' platfrom.".format(sysstr))
             raise SystemError
 
 class Processor:
