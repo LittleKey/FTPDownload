@@ -59,8 +59,8 @@ from sys import version_info
 
 
 def CheckVersion():
-    pyver_local = version_info[:3]
-    pyver_need = (3, 3, 5)
+    pyver_local = version_info[:2]
+    pyver_need = (3, 3)
 
     return pyver_local < pyver_need
 
