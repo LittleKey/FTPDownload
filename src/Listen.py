@@ -34,7 +34,7 @@ class Listener(Subject, _threading.Thread):
         return self._selector.Findall(self._ftp.GetList(self._ftpFileListDir))
 
     def Listen(self, time=5*60):
-        while True:
+        while self.HasElements():
             ftpFileList = self.__GetList()
             if ftpFileList != self._localFileList:
                 self._localFileList = ftpFileList

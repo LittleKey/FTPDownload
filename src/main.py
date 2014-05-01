@@ -56,9 +56,10 @@ class CK_BaS:
         else:
             return False
 
-    def Start(self, listenerList):
+    def Start(self, listenerList, getor):
         for aThread in listenerList:
             aThread.join()
+            self.DeBinding(aThread, getor)
 
 def Clear(*args):
     # 清理文件
@@ -79,4 +80,4 @@ def main(animeName, num=0, TV=''):
     listener = Listener(ftp, ck.Match)
 
     ck.Binding([listener], getor)
-    ck.Start([listener])
+    ck.Start([listener], getor)

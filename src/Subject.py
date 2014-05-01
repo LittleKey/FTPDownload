@@ -18,3 +18,6 @@ class Subject:
     def Notify(self, info=''):
         for observer in self.observersSet:
             observer.Update(info)
+
+    def HasElements(self):
+        return len(self.observersSet) != 0
