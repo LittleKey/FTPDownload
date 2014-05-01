@@ -58,3 +58,9 @@ src/ __pycache__
 *.conf
 src/*.cmd
 *.orig
+gui/*.o
+gui/moc_*.o
+gui/moc_*.cpp
+gui/qrc_*.o
+gui/qrc_*.cpp
+gui/FTPDownloader
