@@ -8,7 +8,7 @@
 ################
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '3.0'
+__Version__ = '3.1'
 __doc__ = \
 r"""
 #####################
@@ -33,10 +33,10 @@ ver: {Version}
 
 [USAGE]
 
-    FTPDownload.py AnimeName [num] [-t TV]
+    FTPDownload.py AnimeName
 
     AnimeName
-        动画名
+        动画名， 使用正则表达式匹配。会下载所有匹配的文件。
 
 """.format(Author=__Author__, Version=__Version__)
 
@@ -44,7 +44,7 @@ from main import main
 from main import Clear
 from sys import argv
 import settings
-import support2.py
+import support2
 
 if __name__ == '__main__':
     if support2.CheckVersion():
@@ -52,21 +52,7 @@ if __name__ == '__main__':
                                             '.'.join(map(str, version_info[:3]))))
         exit(-1)
 
-    apple = 0
-    TV = ''
     try:
-        if '-T' in argv:
-            num = argv.index('-T')
-            del argv[num]
-            TV = argv.pop(num)
-
-        if len(argv) == 3:
-            main(argv[1], int(argv[2]), TV=TV)
-        elif len(argv) == 2:
-            main(argv[1], TV=TV)
-        else:
-            print(__doc__)
-            exit(-1)
-
+        main(argv[1])
     finally:
         Clear(settings.LOG_Filename)
