@@ -4,11 +4,12 @@
 from Observer import Observer
 import settings
 from FTP import FTP
+from Select import Selector
 #import os
 
 
 class Getor(Observer):
-    def __init__(self, ftp, localDir=settings.Download_Dir, remoteDir=settings.FTP_FileList_Dir):
+    def __init__(self, ftp, match, localDir=settings.Download_Dir, remoteDir=settings.FTP_FileList_Dir):
         if not isinstance(ftp, FTP):
             raise TypeError
 
@@ -17,18 +18,21 @@ class Getor(Observer):
         self._ftp = ftp
         self._localDir = localDir
         self._remoteDir = remoteDir
+        self._selector = Selector(r"^ *(\d*) ({filename})$".format(filename=match))
 
-    def Download(self, filename, size):
+    def _Download(self, filename, size):
         flag = 0
+        print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
         while flag != 2:
             flag = self._ftp.GetFile(filename, size, self._localDir, self._remoteDir)
         
         return flag
 
-    def Update(self, infoList):
+    def Update(self, info):
         try:
-            for size, filename in infoList:
-                self.Download(filename, size)
+            for size, filename in self._selector.Findall(info):
+                self._Download(filename.strip(), int(size))
+                #print(filename, size)
         except:
             pass
 
