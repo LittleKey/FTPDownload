@@ -16,8 +16,15 @@ class Subject:
             pass
 
     def Notify(self, info=''):
+        detachList = []
         for observer in self.observersSet:
-            observer.Update(info)
+            try:
+                observer.Update(info)
+            except NameError:
+                detachList.append(observer)
+                
+        for observer in detachList:
+            self.Detach(observer)
 
     def HasElements(self):
         return len(self.observersSet) != 0
