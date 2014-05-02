@@ -9,28 +9,16 @@
 
 ### Requirements
 
-    Python 3.3 (or more later)
+    Python 2.6 (or more later)
     lftp (need cygwin for windows)
 
 ------------------------
 ### Usage
 
-   > FTPDownload.py AnimeName [num] [-t TV]
+   > FTPDownload.py AnimeName
 
 ##### AnimeName
-    动画名
-
-##### num [dafault: 0]
-    指定要下集数的范围
-    下载集数的范围是[num-last]
-
-   >p.s: 只会下最新一集
-
-##### -t
-    指定要选择的电视台
-
-##### TV [default: '']
-    电视台名
+    动画名， 使用正则表达式匹配。会下载所有匹配的文件。
 
 
 ------------------------
@@ -59,3 +47,5 @@
     v2.2: add lftp check...if you use this software in windows, you'll must set lftp's dir in settings.py file.
 
     v3.0: 3rd code refactoring....
+
+    v3.1: 4th code refactoring...

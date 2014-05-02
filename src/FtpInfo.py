@@ -28,7 +28,7 @@ class FtpInfo:
     def GetInfo(self):
         try:
             self.__GetInfoFromFile()
-        except FileNotFoundError:
+        except IOError:
             self.__GetInfoFromInput()
 
     def __GetInfoFromFile(self, ftpConf=settings.FTP_Conf_File):

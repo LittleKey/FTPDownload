@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from __future__ import print_function
 import settings
 from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
 from subprocess import call
+from sys import stdout
 
 
 class FTPFactory:
@@ -22,8 +24,8 @@ class FTPFactory:
             print("Get lftp version...\n")
             call([os.path.join(settings.LFTP_DIR, 'lftp'), '--version'])
             return LFTP(self.ftpInfo)
-        except FileNotFoundError:
-            print("[FileNotFoundError]: No found lftp")
+        except IOError:
+            print("[IOError]: No found lftp")
             exit(0)
         finally:
             print("\n")
@@ -68,14 +70,16 @@ class LFTP(FTP):
         return loginCM
 
     def GetList(self, fileListDir):
-        print("Get list...")
+        print("Get list...", end='')
+        stdout.flush()
         self.processor(settings.CM_ts_List.format(Dir=fileListDir))
-        print("Got list.")
+        print("\r" + " "*len("Get list...") + "\r", end='')
+        print("Got list.", end='\n\n')
 
         try:
             with open(settings.LOG_Filename, encoding='utf-8') as logFile:
                 return logFile.read()
-        except FileNotFoundError:
+        except IOError:
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             return ''
 
@@ -94,7 +98,7 @@ class LFTP(FTP):
             if filename.lower() == cfile.lower():
                 if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
                     # 文件已存在，下载已完成
-                    print("Download end.")
+                    print("Download end.", end='\n\n')
                     return 2
                 else:
                     # 文件已存在，继续下载
@@ -104,6 +108,7 @@ class LFTP(FTP):
         # 文件不存在，开始下载ts
         print("New download...")
         self.__GetNewFile(filename, downloadDIR, ftpDir)
+
         return 0
 
 

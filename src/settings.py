@@ -20,7 +20,7 @@ if platform.system().lower() == "windows":
 elif platform.system().lower() == "linux":
     LFTP_DIR = abspath(r'/usr/bin')
 else:
-    print("[FileNotFoundError]: No found 'lftp'.")
+    print("[IOError]: No found 'lftp'.")
     exit(0)
 
 #======================================================================================#
@@ -68,13 +68,21 @@ lcd {Download_Dir}
 # 获取ts文件列表的命令
 CM_ts_List = \
 r"""
-ls -l {Dir}
+recls -1sB --block-size=1 --filesize {Dir}
 """#.format(Dir=FTP_FileList_Dir)
 
 # 获取ts文件的命令
 CM_ts_Get = \
 r"""
 pget {args} {filename}
+"""
+
+# 使用队列处理命令
+CM_queue = \
+r"""
+queue
+{Other_CM}
+queue start
 """
 
 # pget 续传文件的命令的参数
