@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from __future__ import print_function
 import settings
 from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
 from subprocess import call
+from sys import stdout
 
 
 class FTPFactory:
@@ -68,9 +70,11 @@ class LFTP(FTP):
         return loginCM
 
     def GetList(self, fileListDir):
-        print("Get list...")
+        print("Get list...", end='')
+        stdout.flush()
         self.processor(settings.CM_ts_List.format(Dir=fileListDir))
-        print("Got list.")
+        print("\r" + " "*len("Get list...") + "\r", end='')
+        print("Got list.", end='\n\n')
 
         try:
             with open(settings.LOG_Filename, encoding='utf-8') as logFile:
@@ -94,7 +98,7 @@ class LFTP(FTP):
             if filename.lower() == cfile.lower():
                 if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
                     # 文件已存在，下载已完成
-                    print("Download end.")
+                    print("Download end.", end='\n\n')
                     return 2
                 else:
                     # 文件已存在，继续下载
