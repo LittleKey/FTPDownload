@@ -14,7 +14,7 @@ except ImportError:
 
 
 class Listener(Subject, _threading.Thread):
-    def __init__(self, ftp, match, fileListDir=settings.FTP_FileList_Dir):
+    def __init__(self, ftp, fileListDir=settings.FTP_FileList_Dir):
         if not isinstance(ftp, FTP):
             raise TypeError
 
@@ -23,24 +23,21 @@ class Listener(Subject, _threading.Thread):
         _threading.Thread.__init__(self)
 
         self._ftpFileListDir = fileListDir
-        self._localFileList = []
+        self._localFilelist = ''
         self._ftp = ftp
-        self.__SetSelector(match)
-
-    def __SetSelector(self, match):
-        self._selector = Selector(match)
 
     def __GetList(self):
-        return self._selector.Findall(self._ftp.GetList(self._ftpFileListDir))
+        return self._ftp.GetList(self._ftpFileListDir)
 
     def Listen(self, time=5*60):
         while self.HasElements():
-            ftpFileList = self.__GetList()
-            if ftpFileList != self._localFileList:
-                self._localFileList = ftpFileList
-                #super(Listener, self).Notify(self._localFileList)
-                self.Notify(self._localFileList)
-
+            ftpFilelist = self.__GetList()
+            if ftpFilelist != self._localFilelist:
+                self._localFilelist = ftpFilelist
+                #super(Listener, self).Notify(self._localFilelist)
+                self.Notify(self._localFilelist)
+                
+            print("Wait 5 mins...")
             sleep(time)
 
     def run(self):
@@ -64,11 +61,3 @@ class Listener(Subject, _threading.Thread):
     #        raise TypeError
 
     #    self._ftp = value
-
-    @property
-    def Selector(self):
-        return self._selector
-
-    @Selector.setter
-    def Selector(self, value):
-        self._selector = Selector(value)
