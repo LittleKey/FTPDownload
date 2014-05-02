@@ -10,28 +10,6 @@ from FTP import FTPFactory
 from Getor import Getor
 
 
-class CK_BaS:
-    def __init__(self, animeName, num=0, TV='', match=''):
-        self._match = match
-        self.animeInfo = {
-                'name': animeName,
-                'num': int(num),
-                'TV': TV
-            }
-
-    @property
-    def Match(self):
-        return self._match
-
-    def Binding(self, listenerList, getor):
-        for listener in listenerList:
-            listener.Selector = self._match
-            listener.Attach(getor)
-            listener.start()
-
-    def DeBinding(self, listener, getor):
-        listener.Detach(getor)
-
 def Clear(*args):
     # 清理文件
     for aFile in args:
@@ -43,12 +21,12 @@ def Clear(*args):
             print("Your platform not support remove.")
             return -1
 
-def main(animeName, num=0, TV=''):
-    ck = CK_BaS(animeName, num, TV, match=r' *(\d*) (Blade_and_Soul_05\.ts).*?')
-
+def main(filename):
     ftp = FTPFactory().GetFTP()
-    getor = Getor(ftp)
-    listener = Listener(ftp, ck.Match)
+    getor = Getor(ftp, filename)
+    listener = Listener(ftp)
 
-    ck.Binding([listener], getor)
-    ck.Start([listener], getor)
+    listener.Attach(getor)
+
+    listener.start()
+    listener.join()
