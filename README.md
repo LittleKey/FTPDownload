@@ -15,10 +15,10 @@
 ------------------------
 ### Usage
 
-   > FTPDownload.py AnimeName [num] [-t TV]
+   > FTPDownload.py AnimeName
 
 ##### AnimeName
-    动画名
+    动画名， 使用正则表达式匹配。会下载所有匹配的文件。
 
 
 ------------------------
@@ -47,3 +47,5 @@
     v2.2: add lftp check...if you use this software in windows, you'll must set lftp's dir in settings.py file.
 
     v3.0: 3rd code refactoring....
+
+    v3.1: 4th code refactoring...
