@@ -22,8 +22,8 @@ class FTPFactory:
             print("Get lftp version...\n")
             call([os.path.join(settings.LFTP_DIR, 'lftp'), '--version'])
             return LFTP(self.ftpInfo)
-        except FileNotFoundError:
-            print("[FileNotFoundError]: No found lftp")
+        except IOError:
+            print("[IOError]: No found lftp")
             exit(0)
         finally:
             print("\n")
@@ -75,7 +75,7 @@ class LFTP(FTP):
         try:
             with open(settings.LOG_Filename, encoding='utf-8') as logFile:
                 return logFile.read()
-        except FileNotFoundError:
+        except IOError:
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             return ''
 
@@ -104,6 +104,7 @@ class LFTP(FTP):
         # 文件不存在，开始下载ts
         print("New download...")
         self.__GetNewFile(filename, downloadDIR, ftpDir)
+
         return 0
 
 

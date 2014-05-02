@@ -8,7 +8,7 @@ from FTP import FTP
 
 
 class Getor(Observer):
-    def __init__(self, ftp, fileFilter, localDir=settings.Download_Dir, remoteDir=settings.FTP_FileList_Dir):
+    def __init__(self, ftp, localDir=settings.Download_Dir, remoteDir=settings.FTP_FileList_Dir):
         if not isinstance(ftp, FTP):
             raise TypeError
 
@@ -17,7 +17,6 @@ class Getor(Observer):
         self._ftp = ftp
         self._localDir = localDir
         self._remoteDir = remoteDir
-        self._filter = fileFilter
 
     def Download(self, filename, size):
         flag = 0
@@ -26,11 +25,12 @@ class Getor(Observer):
         
         return flag
 
-    def Update(self, info):
-        info = self._filter(info)
-        if isinstance(info, (tuple, list)) and len(info) == 2:
-            filename, size = info
-            self.Download(filename, size)
+    def Update(self, infoList):
+        try:
+            for size, filename in infoList:
+                self.Download(filename, size)
+        except:
+            pass
 
     #@property
     #def FTP(self):

@@ -34,10 +34,7 @@ class Processor:
         self.processorCM = processorCM
         self.ftpLoginCM = ftpLoginCM
 
-    def __Execute(self):
-        raise NotImplementedError
-
-    def __Clean(self, filename):
+    def _Execute(self):
         raise NotImplementedError
 
     def _Clean(self, filename):
@@ -47,13 +44,20 @@ class Processor:
             print("Your platfrom not support remove.")
 
     def __call__(self, command, filename):
-        raise NotImplementedError
+        with open(filename, 'w') as confFile:
+            confFile.write(self.ftpLoginCM)
+            confFile.write(command)
+        try:
+            self._Execute()
+        finally:
+            self._Clean(filename)
+
 
 class Win32Processor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
         super(Win32Processor, self).__init__(ftpLoginCM, processorCM)
 
-    def __Execute(self, filename=RandomCode()):
+    def _Execute(self, filename=RandomCode()):
         filename = filename + '.cmd'
         with open(filename, 'w') as execFile:
             execFile.write(self.processorCM)
@@ -61,37 +65,20 @@ class Win32Processor(Processor):
         try:
             call([filename])
         finally:
-            self.__Clean(filename)
-
-    def __Clean(self, filename):
-        super(Win32Processor, self)._Clean(filename)
+            self._Clean(filename)
 
     def __call__(self, command, filename=settings.CONF_Filename):
-        with open(filename, 'w') as confFile:
-            confFile.write(self.ftpLoginCM)
-            confFile.write(command)
-        try:
-            self.__Execute()
-        finally:
-            self.__Clean(filename)
-
+        # 坑爹的父类方法调用方式
+        super(Win32Processor, self).__call__(command, filename)
 
 
 class LinuxProcessor(Processor):
     def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Linux):
         super(LinuxProcessor, self).__init__(ftpLoginCM, processorCM)
 
-    def __Execute(self):
+    def _Execute(self):
         system(self.processorCM)
 
-    def __Clean(self, filename):
-        super(LinuxProcessor, self)._Clean(filename)
-
     def __call__(self, command, filename=basename(settings.CONF_Filename)):
-        with open(filename, 'w') as confFile:
-            confFile.write(self.ftpLoginCM)
-            confFile.write(command)
-        try:
-            self.__Execute()
-        finally:
-            self.__Clean(filename)
+        # 坑爹的父类方法调用方式
+        super(Win32Processor, self).__call__(command, filename)

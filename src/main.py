@@ -2,7 +2,7 @@
 #encoding: utf-8
 
 import os
-#import settings
+import settings
 from StringMerge import StringMerge
 #from time import sleep
 from Listen import Listener
@@ -32,51 +32,22 @@ class CK_BaS:
     def DeBinding(self, listener, getor):
         listener.Detach(getor)
 
-    def _Filter(self, tsList):
-# 过滤器
-        if tsList and self.animeInfo['TV']:
-            tsList = list(filter(lambda t: t[2].upper() == self.animeInfo['TV'], tsList))
-
-        if tsList and self.animeInfo['num']:
-            tsList = list(filter(lambda t: int(t[1]) >= self.animeInfo['num'], tsList))
-
-        if tsList:
-            size, num, TV = sorted(tsList, key=lambda t: t[1])[-1]
-
-            filename =  StringMerge( \
-                    head=self.animeInfo['name'], \
-                    foot='.ts', \
-                    middleWare='_', \
-                    stringList=[num, TV]\
-                ).Return()
-
-            print(r"{} size: {}".format(filename, size))
-
-            return filename, size
-        else:
-            return False
-
-    def Start(self, listenerList, getor):
-        for aThread in listenerList:
-            aThread.join()
-            self.DeBinding(aThread, getor)
-
 def Clear(*args):
     # 清理文件
     for aFile in args:
         try:
             os.remove(aFile)
-        except FileNotFoundError:
+        except IOError:
             print("No such file {}".format(aFile))
         except NotImplementedError:
             print("Your platform not support remove.")
             return -1
 
 def main(animeName, num=0, TV=''):
-    ck = CK_BaS(animeName, num, TV, match='group *?(\d.*) \w+\w+\w+.*? {}_?(\d*)_?(.*?)\.ts'.format(animeName))
+    ck = CK_BaS(animeName, num, TV, match=r' *(\d*) (Blade_and_Soul_05\.ts).*?')
 
     ftp = FTPFactory().GetFTP()
-    getor = Getor(ftp, ck._Filter)
+    getor = Getor(ftp)
     listener = Listener(ftp, ck.Match)
 
     ck.Binding([listener], getor)

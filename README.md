@@ -9,7 +9,7 @@
 
 ### Requirements
 
-    Python 3.3 (or more later)
+    Python 2.6 (or more later)
     lftp (need cygwin for windows)
 
 ------------------------
@@ -19,18 +19,6 @@
 
 ##### AnimeName
     动画名
-
-##### num [dafault: 0]
-    指定要下集数的范围
-    下载集数的范围是[num-last]
-
-   >p.s: 只会下最新一集
-
-##### -t
-    指定要选择的电视台
-
-##### TV [default: '']
-    电视台名
 
 
 ------------------------

@@ -28,7 +28,7 @@ ver: {Version}
 
 
 [Requirements]
-    Python 3.3.5 (or more later)
+    Python 2.6 (or more later)
     lftp (need cygwin for windows)
 
 [USAGE]
@@ -38,34 +38,16 @@ ver: {Version}
     AnimeName
         动画名
 
-    num [dafault: 0]
-        指定要下集数的范围
-        下载集数的范围是[num-last]
-        p.s: 只会下最新一集
-
-    -t
-        指定要选择的电视台
-
-    TV [default: '']
-        电视台名
-
 """.format(Author=__Author__, Version=__Version__)
 
 from main import main
 from main import Clear
 from sys import argv
 import settings
-from sys import version_info
-
-
-def CheckVersion():
-    pyver_local = version_info[:2]
-    pyver_need = (3, 3)
-
-    return pyver_local < pyver_need
+import support2.py
 
 if __name__ == '__main__':
-    if CheckVersion():
+    if support2.CheckVersion():
         print("[VersionError]: Your Python version is {}".format(\
                                             '.'.join(map(str, version_info[:3]))))
         exit(-1)
