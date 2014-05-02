@@ -42,6 +42,8 @@ class Processor:
             remove(filename)
         except NotImplementedError:
             print("Your platfrom not support remove.")
+        except IOError:
+            pass
 
     def __call__(self, command, filename):
         with open(filename, 'w') as confFile:
