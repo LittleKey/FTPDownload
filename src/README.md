@@ -29,19 +29,21 @@
    * 最好使用Python开发
 
 
-         1. 需要能进行ssl验证，即可以登陆有ssl验证的ftp
-         2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
-         3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
+        1. 需要能进行ssl验证，即可以登陆有ssl验证的ftp
+        2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
+        3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
 
 ##### Add N:N support
 
    添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
    已实现1:N支持
 
-    现在的设计是:使用listener与getor配合,监视与下载文件.
-          * 一个路径名对应一个listener
-          * 一个文件名对应一个getor
-          * 一个listener对应同一路径名的多个getor
+   现在的设计是:使用listener与getor配合,监视与下载文件.
+
+
+   * 一个路径名对应一个listener
+   * 一个文件名对应一个getor
+   * 一个listener对应同一路径名的多个getor
 
 ##### Update usage
 
