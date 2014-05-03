@@ -7,7 +7,6 @@
 
    * GUI
    * more ftp client support
-   * code refactoring
    * add N:N support
    * update usage
 
@@ -35,10 +34,6 @@
          2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
          3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
 
-##### Code refactoring
-
-> 未完待续
-
 ##### Add N:N support
 
    添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
@@ -51,7 +46,8 @@
 
 ##### Update usage
 
-   使用方式待改进啊~ 不知什么时候又要重构了...有点烦...0r2
+   * 使用listener监视文件列表，如果更新则提醒getor
+   * getor每次更新时使用selector进行过滤，并对过滤后的文件list进行下载
 
 
 > 待补充
