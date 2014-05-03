@@ -9,7 +9,7 @@
 
 ### Requirements
 
-    Python 2.6 (or more later)
+    Python 2.6 (or more later include 3.x)
     lftp (need cygwin for windows)
 
 ------------------------
