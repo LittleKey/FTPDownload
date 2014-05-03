@@ -14,13 +14,17 @@ except ImportError:
 
 
 class Listener(Subject, _threading.Thread):
-    def __init__(self, ftp, fileListDir=settings.FTP_FileList_Dir):
+    def __init__(self, ftp, fileListDir=settings.FTP_FileList_Dir, lock=_threading.Lock()):
         if not isinstance(ftp, FTP):
             raise TypeError
 
         #super(Listener, self).__init__()
         Subject.__init__(self)
         _threading.Thread.__init__(self)
+        # 如果使用了多个Listener，并且他们都使用同一个lftp程序
+        # 那么请使用同一个线程锁(lock)
+        self.lock = lock
+        self.setName("{ftpHost}:{ftpDir}".format(ftpHost=ftp.host, ftpDir=fileListDir))
 
         self._ftpFileListDir = fileListDir
         self._localFilelist = ''
@@ -30,25 +34,27 @@ class Listener(Subject, _threading.Thread):
         return self._ftp.GetList(self._ftpFileListDir)
 
     def Listen(self, time=5*60):
-        while self.HasElements():
+        while self.HasElements() and self.lock.acquire():
             ftpFilelist = self.__GetList()
             if ftpFilelist != self._localFilelist:
                 self._localFilelist = ftpFilelist
                 #super(Listener, self).Notify(self._localFilelist)
                 self.Notify(self._localFilelist)
 
-            print("Wait 5 mins...")
+            if self.lock.locked():
+                self.lock.release()
+            print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
             sleep(time)
 
     def run(self):
         self.Listen()
 
     @property
-    def FtpFileListDir(self):
+    def FtpDir(self):
         return self._ftpFileListDir
 
-    @FtpFileListDir.setter
-    def FtpFileListDir(self, value):
+    @FtpDir.setter
+    def FtpDir(self, value):
         self._ftpFileListDir = value
 
     #@property
