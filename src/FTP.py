@@ -45,6 +45,10 @@ class FTP:
     def GetFile(self, filename, filesize, downloadDIR):
         raise NotImplementedError
 
+    @property
+    def host(self):
+        return self.ftpInfo["host"]
+
 
 class LFTP(FTP):
     r"""使用processor来处理各种lftp命令"""
