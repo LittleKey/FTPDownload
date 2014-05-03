@@ -36,6 +36,7 @@ class Getor(Observer):
                 #print(filename, size)
         except:
             print("[Error]: has some error in Getor.")
+            self._KillSelf() # 自杀( 其实只是逃离工作而已
 
     #@property
     #def FTP(self):

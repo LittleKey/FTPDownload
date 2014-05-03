@@ -20,8 +20,16 @@ class Subject:
         detachList = []
         for observer in self.observersSet:
             try:
-                observer.Update(info)
+                if observer.WantAlive():
+                    observer.Update(info)
+                else:
+                    detahList.append(observer)
+                    
             except NameError:
+                detachList.append(observer)
+            except NotImplementedError:
+                detachList.append(observer)
+            except AttributeError:
                 detachList.append(observer)
 
         for observer in detachList:
