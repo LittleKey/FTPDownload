@@ -29,3 +29,7 @@ def main(filename):
 
     listener.start()
     listener.join()
+
+if __name__ == '__main__':
+    filename = input("AnimeName: ")
+    main(filename)
