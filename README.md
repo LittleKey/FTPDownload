@@ -15,10 +15,10 @@
 ------------------------
 ### Usage
 
-   > FTPDownload.py AnimeName
+   > FTPDownload.py AnimeName [moreAnimeName]
 
-##### AnimeName
     动画名， 使用正则表达式匹配。会下载所有匹配的文件。
+    可以输入多个，并附带(FTP上)目录名。目录名默认为'.'
 
 
 ------------------------
@@ -49,3 +49,5 @@
     v3.0: 3rd code refactoring....
 
     v3.1: 4th code refactoring...
+
+    v3.2: add Download class, support any filenames input.

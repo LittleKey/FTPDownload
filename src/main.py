@@ -5,10 +5,14 @@ from __future__ import print_function
 import os
 #import settings
 #from time import sleep
-from Listen import Listener
+#from Listen import Listener
 from FTP import FTPFactory
-from Getor import Getor
-
+#from Getor import Getor
+from Downloader import Downloader
+try:
+    import threading as _threading
+except ImportError:
+    import dummy_threading as _threading
 
 def Clear(*args):
     # 清理文件
@@ -21,16 +25,13 @@ def Clear(*args):
             print("Your platform not support remove.")
             return -1
 
-def main(filename):
+def main(filenameList):
+    lock = _threading.Lock()  # 获取线程锁，预防多个listener竞争lftp的使用
     ftp = FTPFactory().GetFTP()
-    getor = Getor(ftp, filename)
-    listener = Listener(ftp)
+    downloader = Downloader(ftp, lock, *filenameList)
 
-    listener.Attach(getor)
-
-    listener.start()
-    listener.join()
+    downloader.Run()
 
 if __name__ == '__main__':
     filename = input("AnimeName: ")
-    main(filename)
+    main(list(filename))

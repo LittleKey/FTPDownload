@@ -10,7 +10,7 @@
 from __future__ import print_function
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '3.1'
+__Version__ = '3.2'
 __doc__ = \
 r"""
 #####################
@@ -35,10 +35,11 @@ ver: {Version}
 
 [USAGE]
 
-    FTPDownload.py AnimeName
+    FTPDownload.py AnimeName [moreAnimeName]
 
-    AnimeName
+    AnimeName [moreAnimeName]
         动画名， 使用正则表达式匹配。会下载所有匹配的文件。
+        可以输入多个，并附带(FTP上)目录名。目录名默认为'.'
 
 """.format(Author=__Author__, Version=__Version__)
 
@@ -57,6 +58,6 @@ if __name__ == '__main__':
         exit(-1)
 
     try:
-        main(argv[1])
+        main(argv[1:])
     finally:
         Clear(settings.LOG_Filename)

@@ -29,7 +29,6 @@
    * 最好使用Python开发
 
 
-
          1. 需要能进行ssl验证，即可以登陆有ssl验证的ftp
          2. 能够获取文件列表，即在FTP使用ls -l命令所获得的信息
          3. 能够从FTP下载文件，并要求有‘新下载’，‘续传’，以及‘已完成’三种方式
@@ -37,17 +36,19 @@
 ##### Add N:N support
 
    添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
+   已实现1:N支持
 
     现在的设计是:使用listener与getor配合,监视与下载文件.
-        * 每个listener可以监视一个文件.
-        * 每个getor可以同时下载多个文件(估计是的...0r2)
-        * 一个listener可以对应多个getor(意义不明...0r2)
-        * 一个getor可以对应多个listener(所以可以实现同时多个文件的监视)
+          * 一个路径名对应一个listener
+          * 一个文件名对应一个getor
+          * 一个listener对应同一路径名的多个getor
 
 ##### Update usage
 
-   * 使用listener监视文件列表，如果更新则提醒getor
-   * getor每次更新时使用selector进行过滤，并对过滤后的文件list进行下载
+   使用Downloader与FTP配合，可以实现对一个FTP内任意数量的文件进行(监视)下载
+
+   * 稍微扩展后可以实现对多个FTP的支持(暂时没有这种需求，所以放置play
+   * 使用了一个线程锁，预防lftp的使用竞争
 
 
 > 待补充
