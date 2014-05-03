@@ -3,7 +3,7 @@
 
 
 import settings
-from Select import Selector
+#from Select import Selector
 from Subject import Subject
 from time import sleep
 from FTP import FTP
@@ -36,7 +36,7 @@ class Listener(Subject, _threading.Thread):
                 self._localFilelist = ftpFilelist
                 #super(Listener, self).Notify(self._localFilelist)
                 self.Notify(self._localFilelist)
-                
+
             print("Wait 5 mins...")
             sleep(time)
 
