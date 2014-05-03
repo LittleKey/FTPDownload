@@ -15,7 +15,7 @@ from os.path import exists
 import platform
 
 # lftp所在的目录(必填, 后面的设置可以不改动)
-# 如果把lftp添加到了环境变量里应该连这个也不用设置了( 尚未测试
+# 如果把lftp添加到了环境变量里应该连这个也不用设置了
 if platform.system().lower() == "windows":
     LFTP_DIR = abspath(r'c:/cygwin/bin')
 elif platform.system().lower() == "linux":
@@ -33,11 +33,12 @@ FTP_Conf_File = exists(FTP_Conf_File) and FTP_Conf_File or ''
 # 文件下载目录 [default: 执行程序所在目录]
 Download_Dir = abspath(r'.')
 
-# FTP 指定需要获取的文件列表的目录[default: '.']
-FTP_FileList_Dir = r'.' # 一般来说是支持通配符的。。。
 
 # 下面的命令可以不用改，或者说改了也没多大用。。。还有可能会出问题
 #======================================================================================#
+
+# FTP 指定需要获取的文件列表的目录[default: '.']
+FTP_FileList_Dir = r'.' # 一般来说是支持通配符的。。。
 
 # ts list (伪)Log文件的输出地址
 LOG_Filename = abspath(r'./tsList.log')
@@ -70,7 +71,7 @@ lcd {Download_Dir}
 CM_ts_List = \
 r"""
 recls -1sB --block-size=1 --filesize {Dir}
-"""#.format(Dir=FTP_FileList_Dir)
+"""
 
 # 获取ts文件的命令
 CM_ts_Get = \
