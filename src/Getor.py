@@ -25,7 +25,7 @@ class Getor(Observer):
         print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
         while flag != 2:
             flag = self._ftp.GetFile(filename, size, self._localDir, self._remoteDir)
-        
+
         return flag
 
     def Update(self, info):
@@ -34,7 +34,7 @@ class Getor(Observer):
                 self._Download(filename.strip(), int(size))
                 #print(filename, size)
         except:
-            pass
+            print("[Error]: has some error in Getor.")
 
     #@property
     #def FTP(self):

@@ -22,7 +22,7 @@ class Subject:
                 observer.Update(info)
             except NameError:
                 detachList.append(observer)
-                
+
         for observer in detachList:
             self.Detach(observer)
 

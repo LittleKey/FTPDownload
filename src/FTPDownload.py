@@ -43,6 +43,7 @@ ver: {Version}
 from main import main
 from main import Clear
 from sys import argv
+from sys import version_info
 import settings
 import support2
 
