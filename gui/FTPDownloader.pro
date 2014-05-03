@@ -12,9 +12,10 @@ TARGET = FTPDownloader
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES +=\
     dialog.cpp \
-    mainwidget.cpp
+    mainwidget.cpp \
+    main.cpp
 
 HEADERS  += \
     dialog.h \
