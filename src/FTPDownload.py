@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #encoding: utf-8
 
 ################
@@ -6,6 +6,8 @@
 #   程序入口   #
 #              #
 ################
+
+from __future__ import print_function
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
 __Version__ = '3.1'
@@ -39,6 +41,7 @@ ver: {Version}
         动画名， 使用正则表达式匹配。会下载所有匹配的文件。
 
 """.format(Author=__Author__, Version=__Version__)
+
 
 from main import main
 from main import Clear
