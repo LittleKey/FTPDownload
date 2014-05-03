@@ -3,7 +3,6 @@
 
 import os
 #import settings
-#from StringMerge import StringMerge
 #from time import sleep
 from Listen import Listener
 from FTP import FTPFactory
