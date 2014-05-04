@@ -74,7 +74,7 @@ class LFTP(FTP):
         return loginCM
 
     def GetList(self, fileListDir):
-        print("Get list...", end='')
+        print("\nGet list...", end='')
         stdout.flush()
         self.processor(settings.CM_ts_List.format(Dir=fileListDir))
         print("\r" + " "*len("Get list...") + "\r", end='')
