@@ -10,7 +10,7 @@ from Select import Selector
 
 
 class Getor(Observer):
-    def __init__(self, ftp, match, localDir=settings.Download_Dir, remoteDir=settings.FTP_FileList_Dir):
+    def __init__(self, ftp, match, remoteDir, localDir=settings.Download_Dir):
         if not isinstance(ftp, FTP):
             raise TypeError
 

@@ -10,7 +10,7 @@
 from __future__ import print_function
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '3.2'
+__Version__ = '3.3'
 __doc__ = \
 r"""
 #####################
@@ -50,6 +50,7 @@ from sys import argv
 from sys import version_info
 import settings
 import support2
+from os import listdir
 
 if __name__ == '__main__':
     if support2.CheckVersion():
@@ -60,4 +61,4 @@ if __name__ == '__main__':
     try:
         main(argv[1:])
     finally:
-        Clear(settings.LOG_Filename)
+        Clear(*[x for x in listdir('.') if x.endswith(r".temp")])

@@ -14,7 +14,7 @@ except ImportError:
 
 
 class Listener(Subject, _threading.Thread):
-    def __init__(self, ftp, fileListDir=settings.FTP_FileList_Dir, lock=_threading.Lock()):
+    def __init__(self, ftp, fileListDir, lock=_threading.Lock()):
         if not isinstance(ftp, FTP):
             raise TypeError
 

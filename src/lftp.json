@@ -1,0 +1,9 @@
+{
+    "CM_ts_List": "\nrecls -1sB --block-size=1 --filesize {Dir}\n",
+    "CM_queue": "\nqueue\n{Other_CM}\nqueue start\n",
+    "CM_ftp_Login": "\nlftp {host}\nlogin {user} {passwd}\n",
+    "CM_ftp_Login_TLS_V1": "\nset ssl:verify-certificate no\n",
+    "CM_LFTP_Get_File": "\nlcd {Download_Dir}\npget {args} {filename}\n",
+    "ARGS_Continue_ts_Get": "-c -n 10",
+    "ARGS_New_ts_Get": "-n 10"
+}
