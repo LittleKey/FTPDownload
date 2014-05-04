@@ -33,7 +33,6 @@ class FTPFactory:
             print("\n")
 
 
-
 class FTP:
     """其实这应该是抽象类...WTF!!"""
     def __init__(self, ftpInfo):
