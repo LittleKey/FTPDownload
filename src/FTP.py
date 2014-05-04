@@ -64,14 +64,6 @@ class LFTP(FTP):
 
         return ProcessorFactory(loginCM).GetProcessor()
 
-    def __GetLFTPCM(self, filename):
-        try:
-            with open(filename) as jsonData:
-                return loads(jsonData.read())
-        except IOError:
-            print("[IOError]: No found '{filename}'".format(filename=filename))
-            exit(1)
-
     def __GetLoginCM(self, ftpInfo):
         loginCM = self.CM["CM_ftp_Login"].format(
                 host   = ftpInfo['host'],
@@ -88,7 +80,7 @@ class LFTP(FTP):
             print("\nGet list...", end='')
             stdout.flush()
 
-            return self.processor(self.CM["CM_ts_List"].format(Dir=fileListDir))
+            return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir))
         finally:
             print("\r" + " "*len("Get list...") + "\r", end='')
             print("Got list.", end='\n\n')
