@@ -51,3 +51,6 @@
     v3.1: 4th code refactoring...
 
     v3.2: add Download class, support any filenames input.
+
+    v3.3: from settings.py file move lftp command to lftp.json file. update lftp env_set.
+    remove LOG_Filename and CONF_Filename settings, remove FTP_FileList_Dir setting. update Processor.

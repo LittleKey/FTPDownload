@@ -1,4 +1,4 @@
 @echo off
-cd src
+cd /d "%~dp0"/src
 FTPDownload.py AnimeName.*
 pause
