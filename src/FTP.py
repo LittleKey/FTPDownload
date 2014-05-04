@@ -8,6 +8,7 @@ from Processor import ProcessorFactory
 import os
 from subprocess import call
 from sys import stdout
+from json import loads
 
 
 class FTPFactory:
@@ -22,7 +23,8 @@ class FTPFactory:
         # 暂时只有这一个FTP实现，所以这样写了...
         try:
             print("Get lftp version...\n")
-            call([os.path.join(settings.LFTP_DIR, 'lftp'), '--version'])
+            call(['lftp', '--version'])
+
             return LFTP(self.ftpInfo)
         except IOError:
             print("[IOError]: No found lftp")
@@ -54,7 +56,8 @@ class LFTP(FTP):
     r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
         super(LFTP, self).__init__(ftpInfo)
-
+        self.CM = self.__GetLFTPCM(settings.LFTP_CM_File)
+        
         self.processor = self.__SetProcessor(ftpInfo)
 
     def __SetProcessor(self,ftpInfo):
@@ -62,40 +65,50 @@ class LFTP(FTP):
 
         return ProcessorFactory(loginCM).GetProcessor()
 
+    def __GetLFTPCM(self, filename):
+        try:
+            with open(r'lftp.json') as jsonData:
+                return loads(jsonData.read())
+        except IOError:
+            print("[IOError]: No found 'lftp.json'")
+            exit(1)
+
     def __GetLoginCM(self, ftpInfo):
-        loginCM = settings.CM_ftp_Login.format(
+        loginCM = self.CM["CM_ftp_Login"].format(
                 host   = ftpInfo['host'],
                 user   = ftpInfo['user'],
                 passwd = ftpInfo['passwd']
             )
         if ftpInfo['ssh'].upper() == "TLS_V1" or ftpInfo['ssh'].upper() == "SSL_V3":
-            loginCM += settings.CM_ftp_Login_TLS_V1  # 添加TLS_V1验证设置。。。
+            loginCM += self.CM["CM_ftp_Login_TLS_V1"]  # 添加TLS_V1验证设置。。。
 
         return loginCM
 
     def GetList(self, fileListDir):
-        print("\nGet list...", end='')
-        stdout.flush()
-        self.processor(settings.CM_ts_List.format(Dir=fileListDir))
-        print("\r" + " "*len("Get list...") + "\r", end='')
-        print("Got list.", end='\n\n')
-
         try:
-            with open(settings.LOG_Filename, encoding='utf-8') as logFile:
-                return logFile.read()
-        except IOError:
-            print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
-            return ''
+            print("\nGet list...", end='')
+            stdout.flush()
+
+            return self.processor(self.CM["CM_ts_List"].format(Dir=fileListDir))
+        finally:
+            print("\r" + " "*len("Get list...") + "\r", end='')
+            print("Got list.", end='\n\n')
 
     def __GetNewFile(self, filename, downloadDIR, ftpDir):
-        args = settings.ARGS_New_ts_Get
+        args = self.CM["ARGS_New_ts_Get"]
         filename = os.path.join(ftpDir, filename)
-        self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
+
+        return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
+                                                               args=args, \
+                                                               filename=filename))
 
     def __GetExistFile(self, filename, downloadDIR, ftpDir):
-        args = settings.ARGS_Continue_ts_Get
+        args = self.CM["ARGS_Continue_ts_Get"]
         filename = os.path.join(ftpDir, filename)
-        self.processor(settings.CM_LFTP_Get_File.format(Download_Dir=downloadDIR, args=args, filename=filename))
+
+        return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
+                                                               args=args, \
+                                                               filename=filename))
 
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
         for cfile in os.listdir(downloadDIR):

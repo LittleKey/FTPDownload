@@ -6,13 +6,14 @@ import settings
 from os import system
 from os import remove
 from os.path import basename
+from os import environ
 from subprocess import call
 from random import random
 import platform
 
 
 def RandomCode():
-    return 'LittleKey'.join(str(random() * (10**8)).split('8'))[:80]
+    return 'LittleKey'.join(str(random() * (10**8)).split('8'))[:80] + ".temp"
 
 class ProcessorFactory:
     """"return 'Processor' class"""
@@ -31,57 +32,53 @@ class ProcessorFactory:
             raise SystemError
 
 class Processor:
-    def __init__(self, ftpLoginCM, processorCM):
-        self.processorCM = processorCM
+    def __init__(self, ftpLoginCM):
         self.ftpLoginCM = ftpLoginCM
+        self.processorCM = \
+r"""
+lftp -f "{CONF_Filename}" > "{LOG_Filename}"
+"""
 
-    def _Execute(self):
-        raise NotImplementedError
+    def _Execute(self, conffilename, logFilename):
+        return system(self.processorCM.format(CONF_Filename=conffilename, \
+                                              LOG_Filename=logFilename))
 
-    def _Clean(self, filename):
-        try:
-            remove(filename)
-        except NotImplementedError:
-            print("Your platfrom not support remove.")
-        except IOError:
-            pass
+    def _Clean(self, *filenameList):
+        for filename in filenameList:
+            try:
+                remove(filename)
+            except NotImplementedError:
+                print("Your platfrom not support remove.")
+            except IOError:
+                pass
 
-    def __call__(self, command, filename):
-        with open(filename, 'w') as confFile:
+    def __call__(self, command):
+        inputFilename = RandomCode()
+        outputFilename = RandomCode()
+
+        with open(inputFilename, 'w') as confFile:
             confFile.write(self.ftpLoginCM)
             confFile.write(command)
         try:
-            self._Execute()
+            self._Execute(inputFilename, outputFilename)
+            with open(outputFilename, encoding='utf-8') as outputFile:
+                return outputFile.read()
+        except IOError:
+            print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
+            exit(0)
         finally:
-            self._Clean(filename)
+            self._Clean(inputFilename, outputFilename)
 
 
 class Win32Processor(Processor):
-    def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Win32):
-        super(Win32Processor, self).__init__(ftpLoginCM, processorCM)
-
-    def _Execute(self, filename=RandomCode()):
-        filename = filename + '.cmd'
-        with open(filename, 'w') as execFile:
-            execFile.write(self.processorCM)
-
-        try:
-            call([filename])
-        finally:
-            self._Clean(filename)
-
-    def __call__(self, command, filename=settings.CONF_Filename):
-        # 坑爹的父类方法调用方式
-        super(Win32Processor, self).__call__(command, filename)
+    """针对win32平台特性"""
+    def __init__(self, ftpLoginCM):
+        super(Win32Processor, self).__init__(ftpLoginCM)
+        environ["PATH"] +=  ";" + settings.LFTP_DIR
 
 
 class LinuxProcessor(Processor):
-    def __init__(self, ftpLoginCM, processorCM=settings.CM_Execute_Linux):
-        super(LinuxProcessor, self).__init__(ftpLoginCM, processorCM)
-
-    def _Execute(self):
-        system(self.processorCM)
-
-    def __call__(self, command, filename=basename(settings.CONF_Filename)):
-        # 坑爹的父类方法调用方式
-        super(Win32Processor, self).__call__(command, filename)
+    """针对linux平台特性"""
+    def __init__(self, ftpLoginCM):
+        super(LinuxProcessor, self).__init__(ftpLoginCM)
+        environ["PATH"] += ":" + settings.LFTP_DIR
