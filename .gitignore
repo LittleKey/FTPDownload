@@ -67,3 +67,5 @@ gui/FTPDownloader
 gui/Makefile*
 gui/debug
 gui/release
+*.temp
+*.json

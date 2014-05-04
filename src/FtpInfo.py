@@ -4,6 +4,7 @@
 from __future__ import print_function
 import settings
 from getpass import getpass
+from json import loads
 
 
 class FtpInfo:
@@ -34,11 +35,13 @@ class FtpInfo:
 
     def __GetInfoFromFile(self, ftpConf=settings.FTP_Conf_File):
         # 从配置文件获取
-        with open(ftpConf) as ACFile:
-            self.info['host'] = ACFile.readline().strip()
-            self.info['user'] = ACFile.readline().strip()
-            self.info['passwd'] = ACFile.readline().strip()
-            self.info['ssh'] = ACFile.readline().strip()
+        try:
+            with open(ftpConf) as confFile:
+                self.info.update(loads(confFile.read()))
+        except ValueError:
+            print("[ValueError]: '{}' is not json data.".format(ftpConf))
+            print("Please input in stdin...")
+            raise IOError
 
     def __GetInfoFromInput(self):
         # 如果没有配置文件，则改为手动输入

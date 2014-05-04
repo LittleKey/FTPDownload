@@ -55,7 +55,7 @@ class LFTP(FTP):
     r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
         super(LFTP, self).__init__(ftpInfo)
-        self.CM = self.__GetLFTPCM(settings.LFTP_CM_File)
+        self.CM = settings.LFTP_CM_File
         
         self.processor = self.__SetProcessor(ftpInfo)
 
@@ -66,10 +66,10 @@ class LFTP(FTP):
 
     def __GetLFTPCM(self, filename):
         try:
-            with open(r'lftp.json') as jsonData:
+            with open(filename) as jsonData:
                 return loads(jsonData.read())
         except IOError:
-            print("[IOError]: No found 'lftp.json'")
+            print("[IOError]: No found '{filename}'".format(filename=filename))
             exit(1)
 
     def __GetLoginCM(self, ftpInfo):
@@ -110,9 +110,14 @@ class LFTP(FTP):
                                                                filename=filename))
 
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
-        for cfile in os.listdir(downloadDIR):
+        fileExistDIR = os.path.abspath(os.path.join(downloadDIR + '/' + ftpDir))
+        #print(fileExistDIR)
+        if not os.path.exists(fileExistDIR):
+            os.mkdir(fileExistDIR)
+
+        for cfile in os.listdir(fileExistDIR):
             if filename.lower() == cfile.lower():
-                if os.path.getsize(os.path.join(downloadDIR, filename)) >= int(filesize):
+                if os.path.getsize(os.path.join(fileExistDIR, filename)) >= int(filesize):
                     # 文件已存在，下载已完成
                     print("Download end.", end='\n\n')
                     return 2

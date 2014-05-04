@@ -59,6 +59,8 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
         with open(inputFilename, 'w') as confFile:
             confFile.write(self.ftpLoginCM)
             confFile.write(command)
+            #print(command)
+            #s=input()
         try:
             self._Execute(inputFilename, outputFilename)
             with open(outputFilename, encoding='utf-8') as outputFile:

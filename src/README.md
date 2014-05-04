@@ -9,6 +9,7 @@
    * more ftp client support
    * add N:N support
    * update usage
+   * dir re support
 
 ##### GUI
 
@@ -53,7 +54,13 @@
    * 稍微扩展后可以实现对多个FTP的支持(暂时没有这种需求，所以放置play
    * 使用了一个线程锁，预防lftp的使用竞争
 
-
 > 待补充
+
+##### DIR RE support
+
+    目录添加正则表达式支持。蛋疼，不过貌似有点用的样子
+
+    话说目录貌似原本就支持通配符。。。（不过用了可能会出事故，所以还是算了。。
+
 
 ------------------

@@ -20,6 +20,20 @@
     动画名， 使用正则表达式匹配。会下载所有匹配的文件。
     可以输入多个，并附带(FTP上)目录名。目录名默认为'.'
 
+    p.s: basename尚不能使用 '\', \w', \d', '(', ')' 等正则表达式字符. dirname不支持正则表达式.
+
+  > ftpinfo.json
+
+   用于提供ftp的信息，如果没有提供这个文件则会从标准输入获取
+   使用json格式 e.p:
+
+    {
+        "host": "ftp://ftp.abc.com:21",
+        "user": "account",
+        "passwd": "password",
+        "ssh": ""
+    }
+
 
 ------------------------
 ### ChangeLog
@@ -54,3 +68,7 @@
 
     v3.3: from settings.py file move lftp command to lftp.json file. update lftp env_set.
     remove LOG_Filename and CONF_Filename settings, remove FTP_FileList_Dir setting. update Processor.
+
+    v3.4: update settings.
+
+    v3.5 update...

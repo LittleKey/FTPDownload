@@ -29,6 +29,7 @@ class Downloader:
                 self.listenerDict[DIR] = Listener(ftp, DIR, self.lock)
             finally:
                 # 创建一个新的getor，并使之注册同一路径的listener
+                #print("{}: {}".format(baseFilename, DIR))
                 self.getorList.append(Getor(ftp, baseFilename, DIR, settings.Download_Dir))
                 self.listenerDict[DIR].Attach(self.getorList[-1])
 
