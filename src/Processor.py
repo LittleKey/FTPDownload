@@ -6,7 +6,6 @@ import settings
 from os import system
 from os import remove
 from os.path import basename
-from os import environ
 from subprocess import call
 from random import random
 import platform
@@ -76,11 +75,10 @@ class Win32Processor(Processor):
     """针对win32平台特性"""
     def __init__(self, ftpLoginCM):
         super(Win32Processor, self).__init__(ftpLoginCM)
-        environ["PATH"] +=  ";" + settings.LFTP_DIR
-
+        
 
 class LinuxProcessor(Processor):
     """针对linux平台特性"""
     def __init__(self, ftpLoginCM):
         super(LinuxProcessor, self).__init__(ftpLoginCM)
-        environ["PATH"] += ":" + settings.LFTP_DIR
+        

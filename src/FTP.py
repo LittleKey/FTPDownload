@@ -9,6 +9,7 @@ import os
 from subprocess import call
 from sys import stdout
 from json import loads
+import platform
 
 
 class FTPFactory:
@@ -22,6 +23,12 @@ class FTPFactory:
     def GetFTP(self):
         # 暂时只有这一个FTP实现，所以这样写了...
         try:
+            systemName = platform.system().lower()
+            if systemName == "windows":
+                os.environ["PATH"] +=  ";" + settings.LFTP_DIR
+            elif systemName == "linux":
+                os.environ["PATH"] += ":" + settings.LFTP_DIR
+
             print("Get lftp version...\n")
             call(['lftp', '--version'])
 

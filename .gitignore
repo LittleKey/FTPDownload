@@ -69,3 +69,4 @@ gui/debug
 gui/release
 *.temp
 *.json
+*.srt
