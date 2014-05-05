@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 
-class Observer:
+class Observer(object):
     def __init__(self):
         self.alive = True
 

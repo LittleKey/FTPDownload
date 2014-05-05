@@ -5,8 +5,8 @@ from __future__ import print_function
 import settings
 from os import system
 from os import remove
-from os.path import basename
-from subprocess import call
+#from os.path import basename
+#from subprocess import call
 from random import random
 import platform
 
@@ -14,7 +14,7 @@ import platform
 def RandomCode():
     return 'LittleKey'.join(str(random() * (10**8)).split('8'))[:80] + ".temp"
 
-class ProcessorFactory:
+class ProcessorFactory(object):
     """"return 'Processor' class"""
     def __init__(self, loginCM):
         self.ftpLoginCM = loginCM
@@ -30,7 +30,7 @@ class ProcessorFactory:
             print("Not support '{}' platfrom.".format(sysstr))
             raise SystemError
 
-class Processor:
+class Processor(object):
     def __init__(self, ftpLoginCM):
         self.ftpLoginCM = ftpLoginCM
         self.processorCM = \
@@ -64,6 +64,9 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
             self._Execute(inputFilename, outputFilename)
             with open(outputFilename, encoding='utf-8') as outputFile:
                 return outputFile.read()
+        except TypeError:
+            with open(outputFilename) as outputFile:
+                return outputFile.read().decode('utf-8')
         except IOError:
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             exit(0)
@@ -75,10 +78,10 @@ class Win32Processor(Processor):
     """针对win32平台特性"""
     def __init__(self, ftpLoginCM):
         super(Win32Processor, self).__init__(ftpLoginCM)
-        
+
 
 class LinuxProcessor(Processor):
     """针对linux平台特性"""
     def __init__(self, ftpLoginCM):
         super(LinuxProcessor, self).__init__(ftpLoginCM)
-        
+

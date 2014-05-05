@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 from __future__ import print_function
-import settings
+#import settings
 #from Select import Selector
 from Subject import Subject
 from time import sleep

@@ -3,13 +3,13 @@
 
 from __future__ import print_function
 from Listen import Listener
-from FTP import FTPFactory
+#from FTP import FTPFactory
 from Getor import Getor
 from os.path import basename, dirname, normpath
 import settings
 
 
-class Downloader:
+class Downloader(object):
     def __init__(self, ftp, lock, *filenameList):
 
         self.listenerDict = dict()

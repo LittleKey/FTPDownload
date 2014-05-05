@@ -8,11 +8,11 @@
 ################
 
 from __future__ import print_function
-from os.path import basename
+#from os.path import basename
 from os.path import abspath
-from os.path import join
+#from os.path import join
 from os.path import exists
-from os import environ
+#from os import environ
 
 # lftp所在的目录(必填, 后面的设置可以不改动)
 # 如果把lftp添加到了环境变量里可以不用设置

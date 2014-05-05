@@ -8,11 +8,11 @@ from Processor import ProcessorFactory
 import os
 from subprocess import call
 from sys import stdout
-from json import loads
+#from json import loads
 import platform
 
 
-class FTPFactory:
+class FTPFactory(object):
     def __init__(self, ftpInfo=FtpInfo()):
         if not isinstance(ftpInfo, FtpInfo):
             raise TypeError
@@ -40,7 +40,7 @@ class FTPFactory:
             print("\n")
 
 
-class FTP:
+class FTP(object):
     """其实这应该是抽象类...WTF!!"""
     def __init__(self, ftpInfo):
         if not isinstance(ftpInfo, FtpInfo):
@@ -63,7 +63,7 @@ class LFTP(FTP):
     def __init__(self, ftpInfo):
         super(LFTP, self).__init__(ftpInfo)
         self.CM = settings.LFTP_CM_File
-        
+
         self.processor = self.__SetProcessor(ftpInfo)
 
     def __SetProcessor(self,ftpInfo):

@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-class Subject:
+class Subject(object):
     def __init__(self):
         self.observersSet = set()
 
@@ -24,7 +24,7 @@ class Subject:
                     observer.Update(info)
                 else:
                     detahList.append(observer)
-                    
+
             except NameError:
                 detachList.append(observer)
             except NotImplementedError:

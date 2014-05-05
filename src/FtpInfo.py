@@ -7,7 +7,7 @@ from getpass import getpass
 from json import loads
 
 
-class FtpInfo:
+class FtpInfo(object):
     def __init__(self, host='', user='', passwd='', ssh=''):
         self.info = {
             'host':    host,
