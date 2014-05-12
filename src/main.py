@@ -9,6 +9,7 @@ import os
 from FTP import FTPFactory
 #from Getor import Getor
 from Downloader import Downloader
+from support2 import Input
 try:
     import threading as _threading
 except ImportError:
@@ -33,5 +34,5 @@ def main(filenameList):
     downloader.Run()
 
 if __name__ == '__main__':
-    filename = input("AnimeName: ")
-    main(list(filename))
+    filename = Input("AnimeName: ")
+    main([filename])

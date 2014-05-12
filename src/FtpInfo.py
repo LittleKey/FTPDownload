@@ -5,6 +5,7 @@ from __future__ import print_function
 import settings
 from getpass import getpass
 from json import loads
+from support2 import Input
 
 
 class FtpInfo(object):
@@ -45,10 +46,10 @@ class FtpInfo(object):
 
     def __GetInfoFromInput(self):
         # 如果没有配置文件，则改为手动输入
-        self.info['host'] = input("host: ")
-        self.info['user'] = input("account: ")
+        self.info['host'] = Input("host: ")
+        self.info['user'] = Input("account: ")
         self.info['passwd'] = getpass("password: ")
-        self.info['ssh'] = input("SSH: ")
+        self.info['ssh'] = Input("SSH: ")
 
     def SetInfoFromFile(self):
         self.__GetInfoFromFile()

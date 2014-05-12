@@ -10,3 +10,9 @@ def CheckVersion():
     pyver_need = (2, 6)
 
     return pyver_local < pyver_need
+
+def Input(context):
+    try:
+        return raw_input(context)
+    except NameError:
+        return input(context)
