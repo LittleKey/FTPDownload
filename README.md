@@ -1,7 +1,7 @@
 ﻿FTPDownload
 ===========
 
-   ![LittleKey](https://github.com/LittleKey/gallery/blob/master/MyPic.png?raw=true)
+   [![LittleKey](https://github.com/LittleKey/gallery/blob/master/MyPic.png?raw=true)](https://github.com/LittleKey)
 
    [I've special develop document.](https://github.com/LittleKey/FTPDownload/blob/master/src/README.md)
 
