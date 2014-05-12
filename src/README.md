@@ -10,6 +10,7 @@
    * add N:N support
    * update usage
    * dir re support
+   * code refactoring Downloader class
 
 ##### GUI
 
@@ -62,5 +63,8 @@
 
     话说目录貌似原本就支持通配符。。。（不过用了可能会出事故，所以还是算了。。
 
+##### Code refactoring Downloader class
+
+    重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
 
 ------------------
