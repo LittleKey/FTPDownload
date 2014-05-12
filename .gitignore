@@ -70,3 +70,4 @@ gui/release
 *.temp
 *.json
 *.srt
+*.spec
