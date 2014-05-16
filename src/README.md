@@ -48,6 +48,8 @@
    * 一个文件名对应一个getor
    * 一个listener对应同一路径名的多个getor
 
+> 准备更新
+
 ##### Update usage
 
    使用Downloader与FTP配合，可以实现对一个FTP内任意数量的文件进行(监视)下载
@@ -65,6 +67,16 @@
 
 ##### Code refactoring Downloader class
 
-    重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
+    > 重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
+
+    *初步构思*
+
+    可以做到对所有正则表达式特殊字符的支持，并且目录名也支持正则表达式
+     
+     去掉Downloader类，使用一个新类FileList包含(对应)一个listener(对应一个目录， 
+      一个listener对应N个getor)，FileList维护一个文件列表数组与一个目录数组，文件列表
+      数组里的元素是一个包含文件大小与名字的二元元组，目录数组里的每一个元素都是一个FileList类
+
+
 
 ------------------
