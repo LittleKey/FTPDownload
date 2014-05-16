@@ -63,19 +63,17 @@
 
     目录添加正则表达式支持。蛋疼，不过貌似有点用的样子
 
-    话说目录貌似原本就支持通配符。。。（不过用了可能会出事故，所以还是算了。。
-
 ##### Code refactoring Downloader class
 
-    > 重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
+> 重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
 
     *初步构思*
 
-    可以做到对所有正则表达式特殊字符的支持，并且目录名也支持正则表达式
+   可以做到对所有正则表达式特殊字符的支持，并且目录名也支持正则表达式
      
-     去掉Downloader类，使用一个新类FileList包含(对应)一个listener(对应一个目录， 
-      一个listener对应N个getor)，FileList维护一个文件列表数组与一个目录数组，文件列表
-      数组里的元素是一个包含文件大小与名字的二元元组，目录数组里的每一个元素都是一个FileList类
+        去掉Downloader类，使用一个新类FileList包含(对应)一个listener(对应一个目录， 
+        一个listener对应N个getor)，FileList维护一个文件列表数组与一个目录数组，文件列表
+        数组里的元素是一个包含文件大小与名字的二元元组，目录数组里的每一个元素都是一个FileList类
 
 
 
