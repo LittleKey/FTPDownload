@@ -11,6 +11,7 @@
    * update usage
    * dir re support
    * code refactoring Downloader class
+   * add loginfo file out
 
 ##### GUI
 
@@ -38,7 +39,7 @@
 ##### Add N:N support
 
    添加N:N 支持，可以同时在多个FTP服务器中监视多个文件
-   
+
    已实现1:N支持
 
    现在的设计是:使用listener与getor配合,监视与下载文件.
@@ -66,5 +67,9 @@
 ##### Code refactoring Downloader class
 
     重构Downloader类, 使用工厂模式分离listener与getor的构造与使用
+
+##### Add loginfo file out
+
+    输出一个log信息文件
 
 ------------------
