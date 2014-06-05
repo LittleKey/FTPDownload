@@ -123,11 +123,11 @@ class LFTP(FTP):
                 else:
                     # 文件已存在，继续下载
                     print("Continue download...")
-                    self.__GetExistFile(filename, downloadDIR, ftpDir) # 10线程 续传
+                    self.__GetExistFile(filename, fileExistDIR, ftpDir) # 10线程 续传
                     return 0
         # 文件不存在，开始下载ts
         print("New download...")
-        self.__GetNewFile(filename, downloadDIR, ftpDir)
+        self.__GetNewFile(filename, fileExistDIR, ftpDir)
 
         return 0
 
