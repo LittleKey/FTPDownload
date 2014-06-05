@@ -31,7 +31,8 @@ class Getor(Observer):
 
     def Update(self, info):
         try:
-            for size, filename in self._selector.Findall(info):
+            for apple in self._selector.Findall(info):
+                size, filename = apple[:2]
                 self._Download(filename.strip(), int(size))
                 #print(filename, size)
         except:
