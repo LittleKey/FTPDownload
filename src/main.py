@@ -35,7 +35,9 @@ def main(filenameList):
 
 def NewMain(sysList):
     ftp = FTPFactory().GetFTP()
-    NewDownload(ftp, *sysList)
+    nd = NewDownload(ftp, *sysList)
+
+    nd.Join()
 
 if __name__ == '__main__':
     filename = Input("AnimeName: ")

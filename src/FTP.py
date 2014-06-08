@@ -7,9 +7,10 @@ from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
 from subprocess import call
-#from sys import stdout
+from sys import stdout
 #from json import loads
 import platform
+from support2 import Version
 
 def RMKDIR(path):
 # 递归创建目录
@@ -96,8 +97,10 @@ class LFTP(FTP):
         try:
             #print("\nGet list...", end='')
             #stdout.flush()
+            if Version() == 2:
+                fileListDir = fileListDir.encode("utf-8")
 
-            return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir.encode("utf-8")))
+            return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir))
         finally:
             pass
             #print("\r" + " "*len("Get list...") + "\r", end='')

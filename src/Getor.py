@@ -21,7 +21,7 @@ class Getor(Observer):
         self._ftp = ftp
         self._localDir = localDir
         self._remoteDir = remoteDir
-        self._selector = Selector(r"^ *(\d*) ({filename})$".format(filename=match))
+        self._selector = Selector(r"^\s*(\d+) ({filename})$".format(filename=match))
 
     def _Download(self, filename, size):
         flag = 0

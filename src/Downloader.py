@@ -8,7 +8,6 @@ from Getor import Getor, NewGetor
 from os.path import basename, dirname, normpath
 import settings
 from FileList import FileTableFactory
-from Observer import Observer
 
 
 class Downloader(object):

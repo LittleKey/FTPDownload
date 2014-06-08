@@ -9,11 +9,11 @@ import re
 class Selector(object):
     """貌似只是超简单的封装了一下re库..."""
     def __init__(self, match, flag=re.I | re.M):
-        self.match = re.compile(match, flag)
+        self._match = re.compile(match, flag)
 
     def Findall(self, context):
         #print(context)
-        return self.match.findall(context)
+        return self._match.findall(context)
 
     def Match(self, context):
-        return self.match.match(context)
+        return self._match.match(context)

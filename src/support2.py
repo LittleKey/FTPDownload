@@ -16,3 +16,6 @@ def Input(context):
         return raw_input(context)
     except NameError:
         return input(context)
+
+def Version():
+    return version_info[0]
