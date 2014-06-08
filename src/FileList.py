@@ -91,7 +91,7 @@ class FileTable(Observer):
         dirList = [self._root]
 
         for fileTable in self._dirHash.values():
-            dirList += fileTable.GetDir()
+            dirList += fileTable.GetDirList()
 
         return dirList
 
