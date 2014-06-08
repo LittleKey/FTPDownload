@@ -10,7 +10,7 @@
 from __future__ import print_function
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '3.5'
+__Version__ = '4.0'
 __doc__ = \
 r"""
 #####################
@@ -44,7 +44,7 @@ ver: {Version}
 """.format(Author=__Author__, Version=__Version__)
 
 
-from main import main
+from main import main, NewMain
 from main import Clear
 from sys import argv
 from sys import version_info
@@ -59,6 +59,10 @@ if __name__ == '__main__':
         exit(-1)
 
     try:
-        main(argv[1:])
+        if '-n' in argv:
+            del argv[argv.index('-n')]
+            NewMain(argv[1:])
+        else:
+            main(argv[1:])
     finally:
         Clear(*[x for x in listdir('.') if x.endswith(r".temp")])

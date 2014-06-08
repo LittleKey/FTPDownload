@@ -72,3 +72,5 @@
     v3.4: update settings.
 
     v3.5 update...
+
+    v4.0 suppoer any python's RE, and add dirname support RE, maybe it isn't support Python3.
