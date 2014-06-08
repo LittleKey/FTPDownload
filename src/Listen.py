@@ -24,7 +24,7 @@ class Listener(Subject, _threading.Thread):
         # 如果使用了多个Listener，并且他们都使用同一个lftp程序
         # 那么请使用同一个线程锁(lock)
         self.lock = lock
-        self.setName("{ftpHost}:{ftpDir}".format(ftpHost=ftp.host, ftpDir=fileListDir))
+        self.setName("{ftpHost}:{ftpDir}".format(ftpHost=ftp.host, ftpDir=fileListDir.encode("utf-8")))
 
         self._ftpFileListDir = fileListDir
         self._localFilelist = ''
@@ -34,15 +34,16 @@ class Listener(Subject, _threading.Thread):
         return self._ftp.GetList(self._ftpFileListDir)
 
     def Listen(self, time=5*60):
-        while self.HasElements() and self.lock.acquire():
+        while self.HasElements():
             ftpFilelist = self.__GetList()
             if ftpFilelist != self._localFilelist:
                 self._localFilelist = ftpFilelist
                 #super(Listener, self).Notify(self._localFilelist)
+                #try:
                 self.Notify(self._localFilelist)
+                #except IOError:
+                    #self.__stop()
 
-            if self.lock.locked():
-                self.lock.release()
             print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
             sleep(time)
 
