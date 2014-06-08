@@ -8,7 +8,7 @@ import os
 #from Listen import Listener
 from FTP import FTPFactory
 #from Getor import Getor
-from Downloader import Downloader
+from Downloader import Downloader, NewDownload
 from support2 import Input
 try:
     import threading as _threading
@@ -32,6 +32,10 @@ def main(filenameList):
     downloader = Downloader(ftp, lock, *filenameList)
 
     downloader.Run()
+
+def NewMain(sysList):
+    ftp = FTPFactory().GetFTP()
+    NewDownload(ftp, *sysList)
 
 if __name__ == '__main__':
     filename = Input("AnimeName: ")

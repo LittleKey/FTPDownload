@@ -8,6 +8,7 @@ from FTP import FTP
 from Select import Selector
 #import os
 from os.path import split
+from os.path import join
 
 
 class Getor(Observer):
@@ -72,7 +73,7 @@ class NewGetor(Getor):
     def __init__(self, ftp, match, localDir=settings.Download_Dir):
         super(NewGetor, self).__init__(ftp, match, '/', localDir)
 
-        self._selector = Selector(match)
+        self._selector = Selector(join('/', match))
 
     def Update(self, info):
         for filename, size in info:
