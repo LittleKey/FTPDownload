@@ -14,3 +14,6 @@ class Selector(object):
     def Findall(self, context):
         #print(context)
         return self.match.findall(context)
+
+    def Match(self, context):
+        return self.match.match(context)
