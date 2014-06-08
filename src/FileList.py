@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 from Observer import Observer
+from Subject import Subject
 from Select import Selector
 from Listen import Listener
 import os
@@ -20,8 +21,9 @@ def ToDict(sque, reverse=False):
     return dict(map(lambda t: (t[k], t[v]), sque))
 
 
-class FileTableFactory():
+class FileTableFactory(object):
     def __init__(self, ftp):
+        super(FileTableFactory, self).__init__()
         self._ftp = ftp
         self._factoryList = []
 
@@ -49,9 +51,11 @@ class FileTableFactory():
         return [l for l, r in self._factoryList]
 
 
-class FileTable(Observer):
+class FileTable(Observer, Subject):
     def __init__(self, root, parent, factory):
-        super(FileTable, self).__init__()
+        #super(FileTable, self).__init__()
+        Observer.__init__(self)
+        Subject.__init__(self)
 
         self._root = root
         self._parent = parent
@@ -70,7 +74,11 @@ class FileTable(Observer):
 
             if self._fileHash !=  ftpFileHash:
                 self._fileHash = ftpFileHash
-                #self.Notify(self._fileSet)
+                fileSet = set()
+                for k, v in self._fileHash.items():
+                    fileSet.add(tuple([os.path.join(self._root, k), v]))
+
+                self.Notify(fileSet)
 
             detachSet = set(self._dirHash.keys()) - ftpDirSet
             attachSet = ftpDirSet - set(self._dirHash.keys())
@@ -87,6 +95,12 @@ class FileTable(Observer):
         finally:
             pass
 
+    def Notify(self, info):
+        if self._parent != object:
+            self._parent.Notify(info)
+        else:
+            super(FileTable, self).Notify(info)
+
     def GetDirList(self):
         dirList = [self._root]
 
@@ -98,7 +112,7 @@ class FileTable(Observer):
     def GetFileList(self):
         fileList = []
 
-        for aFile in self._fileHash.values():
+        for aFile in self._fileHash.keys():
             fileList.append(os.path.join(self._root, aFile))
 
         for fileTable in self._dirHash.values():
