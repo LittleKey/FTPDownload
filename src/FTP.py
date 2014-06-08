@@ -84,13 +84,14 @@ class LFTP(FTP):
 
     def GetList(self, fileListDir):
         try:
-            print("\nGet list...", end='')
-            stdout.flush()
+            #print("\nGet list...", end='')
+            #stdout.flush()
 
             return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir.encode("utf-8")))
         finally:
-            print("\r" + " "*len("Get list...") + "\r", end='')
-            print("Got list.", end='\n\n')
+            pass
+            #print("\r" + " "*len("Get list...") + "\r", end='')
+            #print("Got list.", end='\n\n')
 
     def __GetNewFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_New_ts_Get"]
