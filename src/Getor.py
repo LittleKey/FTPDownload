@@ -7,6 +7,7 @@ import settings
 from FTP import FTP
 from Select import Selector
 #import os
+from os.path import split
 
 
 class Getor(Observer):
@@ -65,3 +66,17 @@ class Getor(Observer):
     @FTPDir.setter
     def FTPDir(self, value):
         self._remoteDir = value
+
+
+class NewGetor(Getor):
+    def __init__(self, ftp, match, localDir=settings.Download_Dir):
+        super(NewGetor, self).__init__(ftp, match, '/', localDir)
+
+        self._selector = Selector(match)
+
+    def Update(self, info):
+        for filename, size in info:
+            if self._selector.Match(filename):
+                self._remoteDir, filename = split(filename)
+                self._Download(filename, int(size))
+
