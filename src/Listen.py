@@ -39,10 +39,10 @@ class Listener(Subject, _threading.Thread):
             if ftpFilelist != self._localFilelist:
                 self._localFilelist = ftpFilelist
                 #super(Listener, self).Notify(self._localFilelist)
-                #try:
-                self.Notify(self._localFilelist)
-                #except IOError:
-                    #self.__stop()
+                try:
+                    self.Notify(self._localFilelist)
+                except IOError:
+                    exit()
 
             print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
             sleep(time)
