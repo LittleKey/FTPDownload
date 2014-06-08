@@ -87,7 +87,7 @@ class LFTP(FTP):
             print("\nGet list...", end='')
             stdout.flush()
 
-            return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir))
+            return self.processor(self.CM["CM_ftp_List"].format(Dir=fileListDir.encode("utf-8")))
         finally:
             print("\r" + " "*len("Get list...") + "\r", end='')
             print("Got list.", end='\n\n')
