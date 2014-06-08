@@ -7,10 +7,20 @@ from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
 from subprocess import call
-from sys import stdout
+#from sys import stdout
 #from json import loads
 import platform
 
+def RMKDIR(path):
+# 递归创建目录
+    pPath, dirName = os.path.split(path)
+
+    if not os.path.exists(pPath):
+        #递归创建父目录
+        RMKDIR(pPath)
+
+    if not os.path.exists(path):
+        os.mkdir(path)
 
 class FTPFactory(object):
     def __init__(self, ftpInfo=FtpInfo()):
@@ -112,8 +122,7 @@ class LFTP(FTP):
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
         fileExistDIR = os.path.abspath(os.path.join(downloadDIR + '/' + ftpDir))
         #print(fileExistDIR)
-        if not os.path.exists(fileExistDIR):
-            os.mkdir(fileExistDIR)
+        RMKDIR(fileExistDIR)
 
         for cfile in os.listdir(fileExistDIR):
             if filename.lower() == cfile.lower():
