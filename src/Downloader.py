@@ -4,9 +4,11 @@
 from __future__ import print_function
 from Listen import Listener
 #from FTP import FTPFactory
-from Getor import Getor
+from Getor import Getor, NewGetor
 from os.path import basename, dirname, normpath
 import settings
+from FileList import FileTableFactory
+from Observer import Observer
 
 
 class Downloader(object):
@@ -49,3 +51,21 @@ class Downloader(object):
         # 设置下载目录
         for getor in self.getorList:
             getor.DownloadDir = value
+
+
+class NewDownload(object):
+    def __init__(self, ftp, *matchList):
+        self._ftp = ftp
+        self._fileTbaleFactory = FileTableFactory(self._ftp)
+        self._rootFileTable = self._fileTbaleFactory.New()
+        self._getorList = []
+
+        for match in matchList:
+            getor = NewGetor(self._ftp, match)
+            self._rootFileTable.Attach(getor)
+            self._getorList.append(getor)
+
+    def Join(self):
+        for apple in self._fileTbaleFactory.Listener:
+            apple.join()
+
