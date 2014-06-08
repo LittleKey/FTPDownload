@@ -44,7 +44,7 @@ class Listener(Subject, _threading.Thread):
                 except IOError:
                     exit()
 
-            print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
+            #print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
             sleep(time)
 
     def run(self):
