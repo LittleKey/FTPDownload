@@ -24,6 +24,7 @@ class Listener(Subject, _threading.Thread):
         # 如果使用了多个Listener，并且他们都使用同一个lftp程序
         # 那么请使用同一个线程锁(lock)
         self.lock = lock
+        # Notice filetype code in python3
         self.setName("{ftpHost}:{ftpDir}".format(ftpHost=ftp.host, ftpDir=fileListDir.encode("utf-8")))
 
         self._ftpFileListDir = fileListDir

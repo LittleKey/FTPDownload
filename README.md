@@ -40,10 +40,10 @@
 
    支持任意python的正则表达式, dirname也支持正则表达式
 
+   目录名默认为'/'
+
    其他的用法相同, 占用的系统资源或许比旧版本多.
    不再使用线程锁, 所以会多lftp并发估计是个异步IO(但是貌似有阻塞啊)
-
-   尚未添加python3支持, 反正我这测试没过....0r2
 
 ------------------------
 ### ChangeLog
@@ -84,3 +84,5 @@
     v3.5 update...
 
     v4.0 suppoer any python's RE, and add dirname support RE, maybe it isn't support Python3.
+
+    v4.1 add python3 support.
