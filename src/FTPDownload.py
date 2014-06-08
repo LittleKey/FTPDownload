@@ -24,7 +24,7 @@ ver: {Version}
 
 自动从ftp下载ts
 采用轮询检查是否更新
-下载完成后会自动关闭
+支持使用正则表达式进行批量下载
 如果使用 至少需要设置lftp所在的目录
 更多设置见 settings.py 文件
 
@@ -39,7 +39,8 @@ ver: {Version}
 
     AnimeName [moreAnimeName]
         动画名， 使用正则表达式匹配。会下载所有匹配的文件。
-        可以输入多个，并附带(FTP上)目录名。目录名默认为'/'
+        可以输入多个，并附带(FTP上的)目录名, 使用 '/' 分隔。
+        目录默认为'/': 'dirname/basename' == '/dirname/basename'
 
 """.format(Author=__Author__, Version=__Version__)
 
