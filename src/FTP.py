@@ -72,7 +72,7 @@ class FTP(object):
 class LFTP(FTP):
     r"""使用processor来处理各种lftp命令"""
     def __init__(self, ftpInfo):
-        super(LFTP, self).__init__(ftpInfo)
+        super(self.__class__, self).__init__(ftpInfo)
         self.CM = settings.LFTP_CM_File
 
         self.processor = self.__SetProcessor(ftpInfo)
@@ -147,4 +147,4 @@ class LFTP(FTP):
 
 class SelfFTP(FTP):
     def __init__(self, ftpInfo):
-        super(SelfFTP, self).__init__(ftpInfo)
+        super(self.__class__, self).__init__(ftpInfo)

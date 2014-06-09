@@ -3,9 +3,12 @@
 
 from __future__ import print_function
 
+
 class Subject(object):
-    def __init__(self):
-        self.observersSet = set()
+    def __new__(cls, *args, **kwgs):
+        cls.observersSet = set()
+
+        return super(cls.__class__, cls).__new__(cls, *args, **kwgs)
 
     def Attach(self, o):
         self.observersSet.add(o)

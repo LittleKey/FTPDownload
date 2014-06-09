@@ -13,14 +13,14 @@ except ImportError:
     import dummy_threading as _threading
 
 
-class Listener(Subject, _threading.Thread):
+class Listener(_threading.Thread, Subject):
     def __init__(self, ftp, fileListDir, lock=_threading.Lock()):
         if not isinstance(ftp, FTP):
             raise TypeError
 
-        #super(Listener, self).__init__()
-        Subject.__init__(self)
-        _threading.Thread.__init__(self)
+        super(self.__class__, self).__init__()
+        #Subject.__init__(self)
+        #_threading.Thread.__init__(self)
         # 如果使用了多个Listener，并且他们都使用同一个lftp程序
         # 那么请使用同一个线程锁(lock)
         self.lock = lock
@@ -39,7 +39,7 @@ class Listener(Subject, _threading.Thread):
             ftpFilelist = self.__GetList()
             if ftpFilelist != self._localFilelist:
                 self._localFilelist = ftpFilelist
-                #super(Listener, self).Notify(self._localFilelist)
+                #super(self.__class__, self).Notify(self._localFilelist)
                 try:
                     self.Notify(self._localFilelist)
                 except IOError:

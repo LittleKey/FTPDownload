@@ -77,11 +77,11 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
 class Win32Processor(Processor):
     """针对win32平台特性"""
     def __init__(self, ftpLoginCM):
-        super(Win32Processor, self).__init__(ftpLoginCM)
+        super(self.__class__, self).__init__(ftpLoginCM)
 
 
 class LinuxProcessor(Processor):
     """针对linux平台特性"""
     def __init__(self, ftpLoginCM):
-        super(LinuxProcessor, self).__init__(ftpLoginCM)
+        super(self.__class__, self).__init__(ftpLoginCM)
 
