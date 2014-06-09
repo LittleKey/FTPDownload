@@ -72,4 +72,3 @@ if __name__ == '__main__':
             main(args.match)
     finally:
         Clear(*[x for x in listdir('.') if x.endswith(r".temp")])
-        exit()

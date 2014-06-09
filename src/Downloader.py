@@ -72,4 +72,3 @@ class NewDownload(object):
     def Join(self, delay=5):
         while len(self._getorList):
             sleep(delay)
-        exit()
