@@ -23,7 +23,7 @@ def ToDict(sque, reverse=False):
 
 class FileTableFactory(object):
     def __init__(self, ftp):
-        super(self.__class__, self).__init__()
+        super(FileTableFactory, self).__init__()
         self._ftp = ftp
         self._factoryList = []
 
@@ -53,7 +53,7 @@ class FileTableFactory(object):
 
 class FileTable(Subject, Observer):
     def __init__(self, root, parent, factory):
-        super(self.__class__, self).__init__()
+        super(FileTable, self).__init__()
         #Observer.__init__(self)
         #Subject.__init__(self)
 
@@ -99,7 +99,7 @@ class FileTable(Subject, Observer):
         if self._parent != object:
             self._parent.Notify(info)
         else:
-            super(self.__class__, self).Notify(info)
+            super(FileTable, self).Notify(info)
 
     def GetDirList(self):
         dirList = [self._root]

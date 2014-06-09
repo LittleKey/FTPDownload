@@ -16,7 +16,7 @@ class Getor(Observer):
         if not isinstance(ftp, FTP):
             raise TypeError
 
-        super(self.__class__, self).__init__()
+        super(Getor, self).__init__()
 
         self._ftp = ftp
         self._localDir = localDir
@@ -71,7 +71,7 @@ class Getor(Observer):
 
 class NewGetor(Getor):
     def __init__(self, ftp, match, localDir=settings.Download_Dir):
-        super(self.__class__, self).__init__(ftp, match, '/', localDir)
+        super(NewGetor, self).__init__(ftp, match, '/', localDir)
 
         self._selector = Selector(join('/', match))
 
