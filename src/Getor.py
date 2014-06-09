@@ -9,6 +9,7 @@ from Select import Selector
 #import os
 from os.path import split
 from os.path import join
+from os.path import normpath
 
 
 class Getor(Observer):

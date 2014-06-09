@@ -26,6 +26,7 @@ class FileTableFactory(object):
         self._factoryList = []
 
     def New(self, root='/', parent=object):
+        #print(root)
         listener = Listener(self._ftp, root)
         fileTable = FileTable(root, parent, self)
 
@@ -67,6 +68,7 @@ class FileTable(Observer, Subject):
 
     def Update(self, info):
         try:
+            #self.GetDirList()
             ftpFileHash = ToDict(self._fileSelector.Findall(info), reverse=True) # Notice!
             ftpDirSet = set(self._dirSelector.Findall(info))
 
@@ -74,9 +76,10 @@ class FileTable(Observer, Subject):
                 self._fileHash = ftpFileHash
                 fileSet = set()
                 for k, v in self._fileHash.items():
-                    fileSet.add(tuple([os.path.join(self._root, k), v]))
+                    fileSet.add(tuple([os.path.normpath(os.path.join(self._root, k)).replace('\\', '/'), v]))
 
                 try:
+                    #print(fileSet)
                     self.Notify(fileSet)
                 except IOError as e:
                     self._KillSelf
@@ -87,8 +90,11 @@ class FileTable(Observer, Subject):
 
             for aDir in attachSet:
                 # new FileTable
-                self._dirHash[aDir] = self._factory.New(os.path.join(self._root, aDir), # root
-                                                        self)                           # parent
+                if '\\' in aDir:
+                    raise SystemError("Directory name error...")
+                self._dirHash[aDir] = self._factory.New(os.path.normpath(os.path.join(
+                                                        self._root, aDir.strip())).replace('\\', '/'),  # root
+                                                        self)                                           # parent
 
             for aDir in detachSet:
                 # Delete FileTable
@@ -115,7 +121,7 @@ class FileTable(Observer, Subject):
         fileList = []
 
         for aFile in self._fileHash.keys():
-            fileList.append(os.path.join(self._root, aFile))
+            fileList.append(os.path.join(self._root, aFile).replace('\\', '/'))
 
         for fileTable in self._dirHash.values():
             fileList += fileTable.GetFileList()

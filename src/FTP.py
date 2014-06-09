@@ -108,7 +108,7 @@ class LFTP(FTP):
 
     def __GetNewFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_New_ts_Get"]
-        filename = os.path.join(ftpDir, filename)
+        filename = os.path.join(ftpDir, filename).replace('\\','/')
 
         return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
                                                                args=args, \
@@ -116,14 +116,14 @@ class LFTP(FTP):
 
     def __GetExistFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_Continue_ts_Get"]
-        filename = os.path.join(ftpDir, filename)
+        filename = os.path.join(ftpDir, filename).replace('\\','/')
 
         return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
                                                                args=args, \
                                                                filename=filename))
 
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
-        fileExistDIR = os.path.abspath(os.path.join(downloadDIR + '/' + ftpDir))
+        fileExistDIR = os.path.abspath(os.path.join(downloadDIR + '/' + ftpDir)).replace('\\', '/')
         #print(fileExistDIR)
         RMKDIR(fileExistDIR)
 
