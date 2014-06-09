@@ -5,24 +5,11 @@
 
 ## 需求
 
-   * GUI
    * more ftp client support
    * add N:N support
    * update usage
    * add loginfo file out
    * code refactoring FileTable class
-
-##### GUI
-
-   不管怎么说还是有个GUI好使啊....
-
-   * 使用C++开发
-   * 使用Qt库
-
-
-         1. 使用QProcess 运行后端程序并进行通信
-
-> 待补充
 
 ##### More ftp client support
 
