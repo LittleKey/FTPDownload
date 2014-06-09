@@ -72,3 +72,4 @@ gui/release
 *.spec
 *.mp4
 *.lftp-pget-status
+LK_LineTotal.py
