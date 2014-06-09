@@ -15,6 +15,8 @@
 ------------------------
 ### Usage
 
+   **更多设置见FTPDownload --help**
+
    > FTPDownload.py AnimeName [moreAnimeName]
 
    动画名， 使用正则表达式匹配。会下载所有匹配的文件。
@@ -87,3 +89,5 @@
     v4.0 suppoer any python's RE, and add dirname support RE, maybe it isn't support Python3.
 
     v4.1 add python3 support.
+
+    v4.2 use argparse library.
