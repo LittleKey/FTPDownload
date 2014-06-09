@@ -10,6 +10,7 @@
    * add N:N support
    * update usage
    * add loginfo file out
+   * code refactoring FileTable class
 
 ##### GUI
 
@@ -60,5 +61,11 @@
 ##### Add loginfo file out
 
     输出一个log信息文件
+
+##### Code refactoring FileTable class
+
+    重构FileTable类, 修改获取(用于Notify发送的)信息的方式
+
+   * 添加类方法,获取当期FileTable的(元素为文件名与文件大小对的二元组)文件列表
 
 ------------------
