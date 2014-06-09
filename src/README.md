@@ -11,6 +11,7 @@
    * update usage
    * add loginfo file out
    * code refactoring FileTable class
+   * getor add asynchronization
 
 ##### GUI
 
@@ -67,5 +68,9 @@
     重构FileTable类, 修改获取(用于Notify发送的)信息的方式
 
    * 添加类方法,获取当期FileTable的(元素为文件名与文件大小对的二元组)文件列表
+
+##### Getor add asynchronization
+
+   给getor添加异步并发...大概能弄个同时下载多个文件...
 
 ------------------
