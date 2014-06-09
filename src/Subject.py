@@ -2,18 +2,11 @@
 # encoding: utf-8
 
 from __future__ import print_function
-from support2 import Version
 
 
 class Subject(object):
-    def __new__(cls, *args, **kwgs):
-        # 用于支持Mixin
-        cls.observersSet = set()
-
-        if Version() == 2:
-            return super(Subject, cls).__new__(cls, *args, **kwgs)
-        else:
-            return super(Subject, cls).__new__(cls)
+    def __init__(self):
+        self.observersSet = set()
 
     def Attach(self, o):
         self.observersSet.add(o)
