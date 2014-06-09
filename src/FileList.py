@@ -41,8 +41,8 @@ class FileTableFactory(object):
     def Delete(self, fileTable):
         for apple in self._factoryList:
             if apple[1] == fileTable:
-                apple[0].__stop()
-                apple[1].__KillSelf()
+                apple[0].Detach(fileTable)
+                #apple[1]._KillSelf()
                 del self._factoryList[self._factoryList.index(apple)]
                 break
 
