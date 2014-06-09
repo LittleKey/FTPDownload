@@ -7,14 +7,14 @@ from FtpInfo import FtpInfo
 from Processor import ProcessorFactory
 import os
 from subprocess import call
-from sys import stdout
+#from sys import stdout
 #from json import loads
 import platform
 from support2 import Version
 
 def RMKDIR(path):
 # 递归创建目录
-    pPath, dirName = os.path.split(path)
+    pPath = os.path.dirname(path)
 
     if not os.path.exists(pPath):
         #递归创建父目录
