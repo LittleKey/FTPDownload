@@ -36,7 +36,7 @@ class Subject(object):
         for observer in detachList:
             self.Detach(observer)
 
-        if self.observersSet == set():
+        if not self.HasElements():
             raise IOError
 
     def HasElements(self):

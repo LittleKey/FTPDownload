@@ -8,6 +8,7 @@ from Getor import Getor, NewGetor
 from os.path import basename, dirname, normpath
 import settings
 from FileList import FileTableFactory
+from time import sleep
 
 
 class Downloader(object):
@@ -60,11 +61,15 @@ class NewDownload(object):
         self._getorList = []
 
         for match in matchList:
-            getor = NewGetor(self._ftp, match)
+            try:
+                getor = NewGetor(self._ftp, match, settings.Download_Dir)
+            except TypeError:
+                continue
+
             self._rootFileTable.Attach(getor)
             self._getorList.append(getor)
 
-    def Join(self):
-        for apple in self._fileTbaleFactory.Listener:
-            apple.join()
-
+    def Join(self, delay=5):
+        while len(self._getorList):
+            sleep(delay)
+        exit()

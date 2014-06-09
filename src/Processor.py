@@ -48,7 +48,7 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
                 remove(filename)
             except NotImplementedError:
                 print("Your platfrom not support remove.")
-            except IOError:
+            except OSError:
                 pass
 
     def __call__(self, command):

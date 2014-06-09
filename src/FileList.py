@@ -76,7 +76,11 @@ class FileTable(Observer, Subject):
                 for k, v in self._fileHash.items():
                     fileSet.add(tuple([os.path.join(self._root, k), v]))
 
-                self.Notify(fileSet)
+                try:
+                    self.Notify(fileSet)
+                except IOError as e:
+                    self._KillSelf
+                    raise e
 
             detachSet = set(self._dirHash.keys()) - ftpDirSet
             attachSet = ftpDirSet - set(self._dirHash.keys())

@@ -30,11 +30,11 @@ class FtpInfo(object):
 
     def GetInfo(self):
         try:
-            self.__GetInfoFromFile()
+            self.__GetInfoFromFile(settings.FTP_Conf_File)
         except IOError:
             self.__GetInfoFromInput()
 
-    def __GetInfoFromFile(self, ftpConf=settings.FTP_Conf_File):
+    def __GetInfoFromFile(self, ftpConf):
         # 从配置文件获取
         try:
             with open(ftpConf) as confFile:
@@ -51,8 +51,8 @@ class FtpInfo(object):
         self.info['passwd'] = getpass("password: ")
         self.info['ssh'] = Input("SSH: ")
 
-    def SetInfoFromFile(self):
-        self.__GetInfoFromFile()
+    def SetInfoFromFile(self, path=settings.FTP_Conf_File):
+        self.__GetInfoFromFile(path)
 
     def SetInfoFromInput(self):
         self.__GetInfoFromInput()
