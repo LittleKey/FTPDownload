@@ -12,6 +12,10 @@ from subprocess import call
 import platform
 from support2 import Version
 import support2
+try:
+    import threading as _threading
+except ImportError:
+    import dummy_threading as _threading
 
 def RMKDIR(path):
 # 递归创建目录
@@ -77,6 +81,7 @@ class LFTP(FTP):
         self.CM = settings.LFTP_CM_File
 
         self.processor = self.__SetProcessor(ftpInfo)
+        self._lock = _threading.Lock()
 
     def __SetProcessor(self,ftpInfo):
         loginCM = self.__GetLoginCM(ftpInfo)
@@ -126,7 +131,10 @@ class LFTP(FTP):
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
         fileExistDIR = os.path.abspath(support2.Join(downloadDIR + '/' + ftpDir))
         #print(fileExistDIR)
-        RMKDIR(fileExistDIR)
+
+        if self._lock.acquire():
+            RMKDIR(fileExistDIR)
+            self._lock.release()
 
         for cfile in os.listdir(fileExistDIR):
             if filename.lower() == cfile.lower():
