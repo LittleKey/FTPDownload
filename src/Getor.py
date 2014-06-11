@@ -72,8 +72,11 @@ class Getor(Observer):
 class NewGetor(Getor):
     def __init__(self, ftp, match, localDir=settings.Download_Dir):
         super(NewGetor, self).__init__(ftp, match, '/', localDir)
-
+        # replace r'\\' to '/' for support r'\\' directory split symbol.
+        match = match.replace('\\\\', '/')
+        #print(match)
         self._selector = Selector(join('/', match))
+        #print(match)
 
     def Update(self, info):
         for filename, size in info:
