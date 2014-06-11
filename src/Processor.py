@@ -38,7 +38,7 @@ class Filename:
             else:
                 if self._lock.locked():
                     self._lock.release()
-                return filename                
+                return filename
 
     def RandomCode(self):
         return 'LittleKey'.join(str(random() * (10**8)).split('8'))[:80] + ".temp"
@@ -90,8 +90,8 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
                 pass
 
     def __call__(self, command):
-        inputFilename = RandomCode()
-        outputFilename = RandomCode()
+        inputFilename = self._filename.GetFilename() #RandomCode()
+        outputFilename = self._filename.GetFilename() #RandomCode()
 
         try:
             with open(inputFilename, 'w', encoding='utf-8') as confFile:
