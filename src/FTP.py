@@ -132,6 +132,7 @@ class LFTP(FTP):
             if filename.lower() == cfile.lower():
                 if os.path.getsize(support2.Join(fileExistDIR, filename)) >= int(filesize):
                     # 文件已存在，下载已完成
+                    print(filename, end=': ')
                     print("Download end.", end='\n\n')
                     return 2
                 else:
