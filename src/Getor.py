@@ -10,6 +10,7 @@ from Select import Selector
 from os.path import split
 from os.path import join
 from os.path import normpath
+import sys
 
 
 class Getor(Observer):
@@ -76,7 +77,7 @@ class NewGetor(Getor):
         # replace r'\\' to '/' for support r'\\' directory split symbol.
         match = match.replace('\\\\', '/')
         #print(match)
-        self._selector = Selector(join('/', match))
+        self._selector = Selector(join('/', match), log=sys.stdout)
         #print(match)
 
     def Update(self, info):
