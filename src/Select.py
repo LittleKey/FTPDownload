@@ -15,7 +15,8 @@ class Selector(object):
             print("[REError]: " + e.message)
             raise TypeError
         finally:
-            print(self._match.pattern)
+            pass
+            #print(self._match.pattern)
 
     def Findall(self, context):
         #print(context)
