@@ -92,3 +92,6 @@
     v4.1 add python3 support.
 
     v4.2 use argparse library.
+
+    v4.3 add windows support and add multiple thread download, and add r'\\' split directory name.
+

@@ -10,7 +10,7 @@
 from __future__ import print_function
 
 __Author__ = 'LittleKey (LittleKeyRain@gmail.com)'
-__Version__ = '4.2'
+__Version__ = '4.3'
 __doc__ = \
 r"""
 #####################
