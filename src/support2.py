@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 from sys import version_info
+from os.path import join
 
 
 def CheckVersion():
@@ -19,3 +20,7 @@ def Input(context):
 
 def Version():
     return version_info[0]
+
+def Join(*args):
+# 统一windows与Linux路径的格式
+    return join(*args).replace('\\', '/')

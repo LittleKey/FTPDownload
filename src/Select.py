@@ -14,6 +14,8 @@ class Selector(object):
         except re.error as e:
             print("[REError]: " + e.message)
             raise TypeError
+        finally:
+            print(self._match.pattern)
 
     def Findall(self, context):
         #print(context)

@@ -5,6 +5,7 @@ from Observer import Observer
 from Subject import Subject
 from Select import Selector
 from Listen import Listener
+import support2
 import os
 
 def ToDict(sque, k=0, v=1, reverse=False):
@@ -74,7 +75,7 @@ class FileTable(Observer, Subject):
                 self._fileHash = ftpFileHash
                 fileSet = set()
                 for k, v in self._fileHash.items():
-                    fileSet.add(tuple([os.path.join(self._root, k), v]))
+                    fileSet.add(tuple([support2.Join(self._root, k), v]))
 
                 try:
                     self.Notify(fileSet)
@@ -87,8 +88,8 @@ class FileTable(Observer, Subject):
 
             for aDir in attachSet:
                 # new FileTable
-                self._dirHash[aDir] = self._factory.New(os.path.join(self._root, aDir), # root
-                                                        self)                           # parent
+                self._dirHash[aDir] = self._factory.New(support2.Join(self._root, aDir), # root
+                                                        self)                            # parent
 
             for aDir in detachSet:
                 # Delete FileTable
@@ -115,7 +116,7 @@ class FileTable(Observer, Subject):
         fileList = []
 
         for aFile in self._fileHash.keys():
-            fileList.append(os.path.join(self._root, aFile))
+            fileList.append(support2.Join(self._root, aFile))
 
         for fileTable in self._dirHash.values():
             fileList += fileTable.GetFileList()

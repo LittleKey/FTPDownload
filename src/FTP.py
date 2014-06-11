@@ -11,6 +11,7 @@ from subprocess import call
 #from json import loads
 import platform
 from support2 import Version
+import support2
 
 def RMKDIR(path):
 # 递归创建目录
@@ -108,7 +109,7 @@ class LFTP(FTP):
 
     def __GetNewFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_New_ts_Get"]
-        filename = os.path.join(ftpDir, filename)
+        filename = support2.Join(ftpDir, filename)
 
         return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
                                                                args=args, \
@@ -116,20 +117,20 @@ class LFTP(FTP):
 
     def __GetExistFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_Continue_ts_Get"]
-        filename = os.path.join(ftpDir, filename)
+        filename = support2.Join(ftpDir, filename)
 
         return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
                                                                args=args, \
                                                                filename=filename))
 
     def GetFile(self, filename, filesize, downloadDIR, ftpDir):
-        fileExistDIR = os.path.abspath(os.path.join(downloadDIR + '/' + ftpDir))
+        fileExistDIR = os.path.abspath(support2.Join(downloadDIR + '/' + ftpDir))
         #print(fileExistDIR)
         RMKDIR(fileExistDIR)
 
         for cfile in os.listdir(fileExistDIR):
             if filename.lower() == cfile.lower():
-                if os.path.getsize(os.path.join(fileExistDIR, filename)) >= int(filesize):
+                if os.path.getsize(support2.Join(fileExistDIR, filename)) >= int(filesize):
                     # 文件已存在，下载已完成
                     print("Download end.", end='\n\n')
                     return 2
