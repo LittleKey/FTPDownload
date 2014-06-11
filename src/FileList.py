@@ -27,6 +27,7 @@ class FileTableFactory(object):
         self._factoryList = []
 
     def New(self, root='/', parent=object):
+        #print(root)
         listener = Listener(self._ftp, root)
         fileTable = FileTable(root, parent, self)
 
@@ -68,6 +69,7 @@ class FileTable(Observer, Subject):
 
     def Update(self, info):
         try:
+            #self.GetDirList()
             ftpFileHash = ToDict(self._fileSelector.Findall(info), reverse=True) # Notice!
             ftpDirSet = set(self._dirSelector.Findall(info))
 
@@ -78,6 +80,7 @@ class FileTable(Observer, Subject):
                     fileSet.add(tuple([support2.Join(self._root, k), v]))
 
                 try:
+                    #print(fileSet)
                     self.Notify(fileSet)
                 except IOError as e:
                     self._KillSelf

@@ -57,7 +57,8 @@ class Listener(_threading.Thread, Subject):
 
     @FtpDir.setter
     def FtpDir(self, value):
-        self._ftpFileListDir = value
+        raise NotImplementedError("Can't change Listener FtpDir.")
+        #self._ftpFileListDir = value
 
     #@property
     #def FTP(self):
