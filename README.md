@@ -15,6 +15,8 @@
 ------------------------
 ### Usage
 
+   **更多设置见FTPDownload --help**
+
    > FTPDownload.py AnimeName [moreAnimeName]
 
    动画名， 使用正则表达式匹配。会下载所有匹配的文件。
@@ -39,7 +41,8 @@
    添加 '-n' 参数使用新版本
 
    支持任意python的正则表达式, dirname也支持正则表达式
-   **使用 '/' 分隔目录**
+   **强烈建议使用单引号输入正则表达式**
+   **使用 '/' or '\\' 分隔目录**
 
    目录名默认为'/'
 
@@ -87,3 +90,8 @@
     v4.0 suppoer any python's RE, and add dirname support RE, maybe it isn't support Python3.
 
     v4.1 add python3 support.
+
+    v4.2 use argparse library.
+
+    v4.3 add windows support and add multiple thread download, and add r'\\' split directory name.
+

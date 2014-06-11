@@ -74,3 +74,4 @@ gui/release
 *.lftp-pget-status
 LK_LineTotal.py
 gui/*
+*.stackdump

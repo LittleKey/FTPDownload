@@ -8,8 +8,16 @@ import re
 
 class Selector(object):
     """貌似只是超简单的封装了一下re库..."""
-    def __init__(self, match, flag=re.I | re.M):
-        self._match = re.compile(match, flag)
+    def __init__(self, match, flag=re.I | re.M, log=None):
+        try:
+            self._match = re.compile(match, flag)
+        except re.error as e:
+            print("[REError]: " + e.message)
+            raise TypeError
+        finally:
+            if log:
+                print("[Regular Expression]:", end=' ')
+                print(self._match.pattern, file=log)
 
     def Findall(self, context):
         #print(context)

@@ -9,6 +9,14 @@ from Select import Selector
 #import os
 from os.path import split
 from os.path import join
+#from os.path import normpath
+import sys
+#from time import sleep
+import support2
+try:
+    import threading as _threading
+except ImportError:
+    import dummy_threading as _threading
 
 
 class Getor(Observer):
@@ -23,11 +31,15 @@ class Getor(Observer):
         self._remoteDir = remoteDir
         self._selector = Selector(r"^\s*(\d+) ({filename})$".format(filename=match))
 
-    def _Download(self, filename, size):
+    def _Download(self, filename, size, remoteDir=''):
+        if not remoteDir:
+            remoteDir = self._remoteDir
+        if support2.Version() == 2:
+            filename.encode('utf-8')
         flag = 0
         print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
         while flag != 2:
-            flag = self._ftp.GetFile(filename, size, self._localDir, self._remoteDir)
+            flag = self._ftp.GetFile(filename, size, self._localDir, remoteDir)
 
         return flag
 
@@ -68,16 +80,43 @@ class Getor(Observer):
     def FTPDir(self, value):
         self._remoteDir = value
 
+def ThreadFunc(func, block=0.5):
+        t = _threading.Thread()
+        t.run = func
+        t.start()
+        t.join(block) # 阻塞
+
+
+class Thread(_threading.Thread):
+    def __init__(self, name, func, *args, **kwargs):
+        super(Thread, self).__init__()
+        if support2.Version() == 2:
+            name = name.encode('utf-8')
+        self.name = name
+        self.setName = name
+        self.func = lambda :func(*args, **kwargs)
+
+    def getResult(self):
+        return self.res
+
+    def run(self):
+        self.res = self.func()
+        print(self.name, 'completed!')
+
 
 class NewGetor(Getor):
     def __init__(self, ftp, match, localDir=settings.Download_Dir):
         super(NewGetor, self).__init__(ftp, match, '/', localDir)
-
-        self._selector = Selector(join('/', match))
+        # replace r'\\' to '/' for support r'\\' directory split symbol.
+        match = match.replace('\\\\', '/')
+        #print(match)
+        self._selector = Selector(join('/', match), log=sys.stdout)
+        #print(match)
 
     def Update(self, info):
         for filename, size in info:
             if self._selector.Match(filename):
-                self._remoteDir, filename = split(filename)
-                self._Download(filename, int(size))
+                remoteDir, filename = split(filename)
+                ThreadFunc(lambda : self._Download(filename, int(size), remoteDir))
+                #self._Download(filename, int(size), remoteDir)
 
