@@ -55,7 +55,7 @@ docs/_build/
 *.ts
 src/ __pycache__
 *.conf
-src/*.cmd
+*.cmd
 *.orig
 gui/*.o
 gui/moc_*.o
