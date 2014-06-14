@@ -36,7 +36,7 @@ Download_Dir = abspath(r'.')
 # lftp命令文件
 LFTP_CM_File = \
 {
-    "CM_ftp_List": "\nrecls -1sB --block-size=1 --filesize \"{Dir}\"\n",
+    "CM_ftp_List": "\nrecls -1sB --block-size=1 --sort=name --filesize \"{Dir}\"\n",
     "CM_queue": "\nqueue\n{Other_CM}\nqueue start\n",
     "CM_ftp_Login": "\nlftp \"{host}\"\nlogin \"{user}\" \"{passwd}\"\n",
     "CM_ftp_Login_TLS_V1": "\nset ssl:verify-certificate no\n",
