@@ -1,0 +1,3 @@
+[submodule "lib/lftp"]
+	path = lib/lftp
+	url = https://github.com/lavv17/lftp.git
