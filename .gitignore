@@ -57,6 +57,7 @@ src/ __pycache__
 *.conf
 *.cmd
 *.orig
+gui/NEW/*
 gui/*.o
 gui/moc_*.o
 gui/moc_*.cpp
