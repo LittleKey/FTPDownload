@@ -45,7 +45,7 @@ import support2
 from os import listdir
 from os.path import abspath
 
-if __name__ == '__main__':
+def FTPDownload():
     if support2.CheckVersion():
         print("[VersionError]: Your Python version is {}".format(\
                                             '.'.join(map(str, version_info[:3]))))
@@ -72,3 +72,6 @@ if __name__ == '__main__':
             main(args.match)
     finally:
         Clear(*[x for x in listdir('.') if x.endswith(r".temp")])
+
+if __name__ == '__main__':
+    FTPDownload()
