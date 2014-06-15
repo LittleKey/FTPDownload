@@ -8,6 +8,7 @@
    * GUI
    * more ftp client support
    * add loginfo file out
+   * add unit test
 
 ##### GUI
 
@@ -35,5 +36,9 @@
 ##### Add loginfo file out
 
     输出一个log信息文件
+
+##### Add unit test
+
+   添加单元测试
 
 ------------------
