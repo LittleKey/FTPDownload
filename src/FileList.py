@@ -6,7 +6,8 @@ from Subject import Subject
 from Select import Selector
 from Listen import Listener
 import support2
-import os
+#import os
+import unittest
 
 def ToDict(sque, k=0, v=1, reverse=False):
 # sque 需要是以二(或更高)元组作为元素的序列, 否则会raise ValueError, 或TypeError
@@ -126,4 +127,15 @@ class FileTable(Observer, Subject):
 
         return fileList
 
+
+class FileListTestCasr(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()
 

@@ -44,6 +44,7 @@ import settings
 import support2
 from os import listdir
 from os.path import abspath
+#import unittest
 
 def FTPDownload():
     if support2.CheckVersion():
@@ -75,3 +76,5 @@ def FTPDownload():
 
 if __name__ == '__main__':
     FTPDownload()
+    #unittest.main()
+

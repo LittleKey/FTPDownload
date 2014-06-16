@@ -7,6 +7,7 @@ from __future__ import print_function
 from Subject import Subject
 from time import sleep
 from FTP import FTP
+import unittest
 try:
     import threading as _threading
 except ImportError:
@@ -70,3 +71,7 @@ class Listener(_threading.Thread, Subject):
     #        raise TypeError
 
     #    self._ftp = value
+
+
+if __name__ == '__main__':
+    unittest.main()
