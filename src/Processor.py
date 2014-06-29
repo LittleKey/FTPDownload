@@ -5,7 +5,8 @@ from __future__ import print_function
 import settings
 from os import system
 from os import remove
-from os.path import exists
+from os.path import exists, join
+from tempfile import gettempdir
 #from os.path import basename
 #from subprocess import call
 from random import random
@@ -90,8 +91,8 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
                 pass
 
     def __call__(self, command):
-        inputFilename = self._filename.GetFilename() #RandomCode()
-        outputFilename = self._filename.GetFilename() #RandomCode()
+        inputFilename = join(gettempdir(), self._filename.GetFilename()) #RandomCode()
+        outputFilename = join(gettempdir(), self._filename.GetFilename()) #RandomCode()
 
         try:
             with open(inputFilename, 'w', encoding='utf-8') as confFile:
