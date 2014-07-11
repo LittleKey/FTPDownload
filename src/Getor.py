@@ -44,7 +44,11 @@ class Getor(Observer):
         if support2.Version() == 2:
             filename.encode('utf-8')
         flag = 0
-        print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
+        try:
+            print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
+        except:
+            print("[Fileinfo]: {filesize}".format(filesize=size))
+            
         while flag != 2:
             flag = self._ftp.GetFile(filename, size, self._localDir, remoteDir)
 
