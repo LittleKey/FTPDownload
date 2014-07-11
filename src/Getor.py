@@ -133,6 +133,7 @@ class NewGetorTest(unittest.TestCase):
     def setUp(self):
         ftp = FTPFactory().GetFTP()
         #self.fileList = FileTableFactory(ftp).New()
+        self.info = [(u'/me.jpg', 6131)]
         self.getor = NewGetor(ftp, r'/.*?[^/]{1}$')
         #self.fileList.Attach(self.getor)
         pass
@@ -142,7 +143,7 @@ class NewGetorTest(unittest.TestCase):
         pass
 
     def test_Update(self):
-        self.getor.Update([(u'/me.jpg', 6131)])
+        self.getor.Update(self.info)
         while _threading.activeCount() != 1: sleep(1)
         self.assertTrue(exists('me.jpg'))
         self.assertEqual(6131, getsize('me.jpg'))
