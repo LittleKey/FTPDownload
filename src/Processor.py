@@ -16,6 +16,8 @@ try:
 except ImportError:
     import dummy_threading as _threading
 
+import unittest
+
 
 class FilenameFactory(object):
     def __init__(self, lock=_threading.Lock()):
@@ -23,6 +25,18 @@ class FilenameFactory(object):
 
     def Get(self):
         return Filename(self._lock)
+
+class FilenameFactoryTest(unittest.TestCase):
+
+    def setUp(self):
+        self.filenameFactory = FilenameFactory()
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_Get(self):
+        self.assertTrue(isinstance(self.filenameFactory.Get(), Filename))
 
 
 class Filename:
@@ -51,6 +65,27 @@ def RandomCode():
     return 'LittleKey'.join(str(random() * (10**8)).split('8'))[:80] + ".temp"
 
 
+class FilenameTest(unittest.TestCase):
+
+    def setUp(self):
+        self.filename = Filename()
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_RandomCode(self):
+        random = self.filename.RandomCode()
+
+        self.assertLessEqual(len(random), 80 + len('.temp'))
+        self.assertEqual(random[-5:], '.temp')
+        pass
+
+    def test_GetFilename(self):
+        self.assertFalse(exists(self.filename.GetFilename()))
+        pass
+
+
 class ProcessorFactory(object):
     """"return 'Processor' class"""
     def __init__(self, loginCM, filenameFactory=FilenameFactory()):
@@ -67,6 +102,22 @@ class ProcessorFactory(object):
         else:
             print("Not support '{}' platfrom.".format(sysstr))
             raise SystemError
+
+
+class ProcessorFactoryTest(unittest.TestCase):
+
+    def setUp(self):
+        self.processFactory = ProcessorFactory(settings.LFTP_CM_File["CM_ftp_Login"].format( \
+                host="ftp://192.168.1.102/", user="anonymous", passwd=""))
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_GetProcessor(self):
+        self.assertTrue(isinstance(self.processFactory.GetProcessor(), Processor))
+        pass
+
 
 class Processor(object):
     def __init__(self, ftpLoginCM, filename):
@@ -117,6 +168,21 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
             self._Clean(inputFilename, outputFilename)
 
 
+class ProcessorTest(unittest.TestCase):
+
+    def setUp(self):
+        self.processor = Processor(settings.LFTP_CM_File["CM_ftp_Login"].format( \
+                host="ftp://192.168.1.102/", user="anonymous", passwd=""), FilenameFactory().Get())
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test___call__(self):
+        self.assertEqual(u'6131 me.jpg\n', self.processor.__call__("recls -1sB --block-size=1 --filesiz me.jpg"))
+        pass
+
+
 class Win32Processor(Processor):
     """针对win32平台特性"""
     def __init__(self, ftpLoginCM, filename):
@@ -127,4 +193,7 @@ class LinuxProcessor(Processor):
     """针对linux平台特性"""
     def __init__(self, ftpLoginCM, filename):
         super(LinuxProcessor, self).__init__(ftpLoginCM, filename)
+
+if __name__ == '__main__':
+    unittest.main()
 
