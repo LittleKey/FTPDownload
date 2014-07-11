@@ -7,7 +7,16 @@ from Select import Selector
 from Listen import Listener
 import support2
 #import os
+
 import unittest
+import os
+from FTP import FTPFactory
+from time import sleep
+from Getor import NewGetor
+try:
+    import threading as _threading
+except ImportError:
+    import dummy_threading as _threading
 
 def ToDict(sque, k=0, v=1, reverse=False):
 # sque 需要是以二(或更高)元组作为元素的序列, 否则会raise ValueError, 或TypeError
@@ -100,6 +109,8 @@ class FileTable(Observer, Subject):
                 self._factory.Delete(self._dirHash[aDir])
                 del self._dirHash[aDir]
         finally:
+            #print(self.GetDirList())
+            #print(self.GetFileList())
             pass
 
     def Notify(self, info):
@@ -109,7 +120,11 @@ class FileTable(Observer, Subject):
             super(FileTable, self).Notify(info)
 
     def GetDirList(self):
-        dirList = [self._root]
+        cDir = self._root
+        if support2.Version() == 2:
+            cDir = unicode(self._root)
+
+        dirList = [cDir]
 
         for fileTable in self._dirHash.values():
             dirList += fileTable.GetDirList()
@@ -128,13 +143,80 @@ class FileTable(Observer, Subject):
         return fileList
 
 
-class FileListTestCasr(unittest.TestCase):
+class FileListTest(unittest.TestCase):
     def setUp(self):
+        self.CreateFtpInfo()
+        ftp = FTPFactory().GetFTP()
+        self.fileList = FileTableFactory(ftp).New()
+        self.fileList.Attach(NewGetor(ftp, "abc"))
+        c = 0
+        l = _threading.activeCount()
+        while c != l:
+            c = l
+            sleep(1)
+            l = _threading.activeCount()
         pass
+        self.maxDiff = None
 
     def tearDown(self):
+        self.RemoveFtpInfo()
         pass
 
+    def test_GetDirList(self):
+        testDirList = map(lambda s: s.replace(u'/home/ftp/', '/'), self.RGetDir(u'/home/ftp/'))
+        if support2.Version() == 2:
+            testDirList = map(unicode, testDirList)
+        self.assertItemsEqual(self.fileList.GetDirList(), testDirList)
+        pass
+
+    def test_GetFileList(self):
+        testFileList = map(lambda s: s.replace(u'/home/ftp/', '/'), self.RGetFile(u'/home/ftp/'))
+        if support2.Version() == 2:
+            testFileList = map(unicode, testFileList)
+        self.assertItemsEqual(self.fileList.GetFileList(), testFileList)
+        pass
+
+    def CreateFtpInfo(self):
+        info = r"""
+        {
+            "host": "ftp://192.168.1.102",
+            "user": "anonymous",
+            "passwd": "",
+            "ssh": ""
+        }
+        """
+        filename = 'ftpinfo.json'
+        if os.path.exists(filename):
+            os.rename(filename, filename + 'backup')
+        with open(filename, 'w') as f:
+            f.write(info)
+
+    def RemoveFtpInfo(self):
+        filename = 'ftpinfo.json'
+        if os.path.exists(filename):
+            os.remove(filename)
+        if os.path.exists(filename + 'backup'):
+            os.rename(filename + 'backup', filename)
+
+    def RGetFile(self, dirName):
+        dirList = os.listdir(dirName)
+        fileList = []
+        for f in dirList:
+            if os.path.isdir(os.path.join(dirName, f)):
+                fileList += self.RGetFile(os.path.join(dirName, f))
+            else:
+                fileList.append(os.path.join(dirName, f))
+
+        return fileList
+
+    def RGetDir(self, dirName):
+        aList = os.listdir(dirName)
+        dirList = [dirName]
+        for d in aList:
+            if os.path.isdir(os.path.join(dirName, d)):
+                dirList += self.RGetDir(os.path.join(dirName, d))
+
+        return dirList
 
 if __name__ == '__main__':
     unittest.main()
