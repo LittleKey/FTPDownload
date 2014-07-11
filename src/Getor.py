@@ -11,12 +11,19 @@ from os.path import split
 from os.path import join
 #from os.path import normpath
 import sys
-#from time import sleep
+from time import sleep
 import support2
 try:
     import threading as _threading
 except ImportError:
     import dummy_threading as _threading
+
+import unittest
+#from FileList import FileTableFactory
+from FTP import FTPFactory
+from os.path import exists
+from os.path import getsize
+from os import remove
 
 
 class Getor(Observer):
@@ -119,4 +126,28 @@ class NewGetor(Getor):
                 remoteDir, filename = split(filename)
                 ThreadFunc(lambda : self._Download(filename, int(size), remoteDir))
                 #self._Download(filename, int(size), remoteDir)
+
+
+class NewGetorTest(unittest.TestCase):
+
+    def setUp(self):
+        ftp = FTPFactory().GetFTP()
+        #self.fileList = FileTableFactory(ftp).New()
+        self.getor = NewGetor(ftp, r'/.*?[^/]{1}$')
+        #self.fileList.Attach(self.getor)
+        pass
+
+    def tearDown(self):
+        remove('me.jpg')
+        pass
+
+    def test_Update(self):
+        self.getor.Update([(u'/me.jpg', 6131)])
+        while _threading.activeCount() != 1: sleep(1)
+        self.assertTrue(exists('me.jpg'))
+        self.assertEqual(6131, getsize('me.jpg'))
+        pass
+
+if __name__ == '__main__':
+    unittest.main()
 

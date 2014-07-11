@@ -17,6 +17,8 @@ try:
 except ImportError:
     import dummy_threading as _threading
 
+import unittest
+
 def RMKDIR(path):
 # 递归创建目录
     pPath = os.path.dirname(path)
@@ -155,6 +157,26 @@ class LFTP(FTP):
         return 0
 
 
+class LFTPTest(unittest.TestCase):
+
+    def setUp(self):
+        self.lftp = FTPFactory().GetFTP()
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_GetList(self):
+        pass
+
+    def test_GetFile(self):
+        pass
+
+
 class SelfFTP(FTP):
     def __init__(self, ftpInfo):
         super(SelfFTP, self).__init__(ftpInfo)
+
+if __name__ == '__main__':
+    unittest.main()
+
