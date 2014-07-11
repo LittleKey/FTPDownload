@@ -7,12 +7,14 @@ from __future__ import print_function
 from Subject import Subject
 from time import sleep
 from FTP import FTP
-import unittest
 try:
     import threading as _threading
 except ImportError:
     import dummy_threading as _threading
 
+import unittest
+from FTP import FTPFactory
+from Observer import Observer
 
 class Listener(_threading.Thread, Subject):
     def __init__(self, ftp, fileListDir, lock=_threading.Lock()):
@@ -71,6 +73,21 @@ class Listener(_threading.Thread, Subject):
     #        raise TypeError
 
     #    self._ftp = value
+
+
+class ListenerTest(unittest.TestCase):
+
+    def setUp(self):
+        self.listen = Listener(FTPFactory().GetFTP(), '/')
+        self.observer = Observer()
+
+        self.listen.Attach(self.observer)
+
+    def tearDown(self):
+        pass
+
+    def test_Run(self):
+        self.assertRaises(SystemExit, self.listen.run)
 
 
 if __name__ == '__main__':
