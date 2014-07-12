@@ -123,6 +123,7 @@ class Processor(object):
     def __init__(self, ftpLoginCM, filename):
         self.ftpLoginCM = ftpLoginCM
         self._filename = filename
+        self._workDir = gettempdir()
         self.processorCM = \
 r"""
 lftp -f "{CONF_Filename}" > "{LOG_Filename}"
@@ -143,8 +144,8 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
                 print("[FileNotFoundError]: {}".format(e.message))
 
     def __call__(self, command):
-        inputFilename = join(gettempdir(), self._filename.GetFilename()) #RandomCode()
-        outputFilename = join(gettempdir(), self._filename.GetFilename()) #RandomCode()
+        inputFilename = join(self._workDir, self._filename.GetFilename()) #RandomCode()
+        outputFilename = join(self._workDir, self._filename.GetFilename()) #RandomCode()
 
         try:
             with open(inputFilename, 'w', encoding='utf-8') as confFile:
@@ -190,6 +191,7 @@ class Win32Processor(Processor):
     """针对win32平台特性"""
     def __init__(self, ftpLoginCM, filename):
         super(Win32Processor, self).__init__(ftpLoginCM, filename)
+        self._workDir = '.'
 
 
 class LinuxProcessor(Processor):

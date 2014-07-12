@@ -47,7 +47,7 @@ class FTPFactory(object):
             #elif systemName == "linux":
             #    os.environ["PATH"] += ":" + settings.LFTP_DIR
 
-            os.environ["PATH"] += os.extsep + settings.LFTP_DIR
+            os.environ["PATH"] += os.pathsep + settings.LFTP_DIR
 
             print("Get lftp version...\n")
             call(['lftp', '--version'])

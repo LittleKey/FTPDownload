@@ -69,9 +69,12 @@ gui/debug
 gui/release
 *.temp
 *.json
+*.jsonbackup
 *.srt
 *.spec
 *.mp4
 *.lftp-pget-status
 LK_LineTotal.py
 *.stackdump
+src/*.dll
+src/*.exe
