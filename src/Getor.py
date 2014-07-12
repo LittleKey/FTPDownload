@@ -46,9 +46,10 @@ class Getor(Observer):
         flag = 0
         try:
             print("[Fileinfo]: {filename} {filesize}".format(filename=filename, filesize=size))
-        except:
+        except Exception as e:
+            print("[AnyError]: {}".format(e.message))
             print("[Fileinfo]: {filesize}".format(filesize=size))
-            
+
         while flag != 2:
             flag = self._ftp.GetFile(filename, size, self._localDir, remoteDir)
 
