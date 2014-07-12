@@ -72,7 +72,7 @@ class Getor(Observer):
     @FTP.setter
     def FTP(self, value):
         if not isinstance(value, FTP):
-            raise TypeError
+            raise TypeError("gave 'ftp' parameters was not FTP.")
 
         self._ftp = value
 
