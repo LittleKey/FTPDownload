@@ -13,7 +13,7 @@ class Selector(object):
             self._match = re.compile(match, flag)
         except re.error as e:
             print("[REError]: " + e.message)
-            raise TypeError
+            raise TypeError("Regular Expression has any error.")
         finally:
             if log:
                 print("[Regular Expression]:", end=' ')

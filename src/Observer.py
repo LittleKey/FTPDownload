@@ -9,7 +9,7 @@ class Observer(object):
         self.alive = True
 
     def Update(self, info):
-        raise NotImplementedError
+        raise NotImplementedError("Observer haven't implemented Update method.")
 
     def WantAlive(self):
         return self.alive

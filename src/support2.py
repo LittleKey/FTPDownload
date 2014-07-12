@@ -15,7 +15,8 @@ def CheckVersion():
 def Input(context):
     try:
         return raw_input(context)
-    except NameError:
+    except NameError as e:
+        #print("[VersionError]: python3 use 'input instead of 'raw_input' input.")
         return input(context)
 
 def Version():

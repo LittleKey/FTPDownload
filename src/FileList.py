@@ -22,7 +22,7 @@ def ToDict(sque, k=0, v=1, reverse=False):
 # sque 需要是以二(或更高)元组作为元素的序列, 否则会raise ValueError, 或TypeError
 # 如果元素高于二元组则只会取k(ey), v(alue)元素分别作为(dict的)键值对
     if sque and len(sque[0]) < 2:
-        raise ValueError
+        raise ValueError("sque's item is not two-tuples(or more).")
 
     if reverse:
         k, v = v, k
@@ -60,6 +60,10 @@ class FileTableFactory(object):
     def Listener(self):
         return [l for l, r in self._factoryList]
 
+    @property
+    def FTP(self):
+        return self._ftp
+
 
 class FileTable(Observer, Subject):
     def __init__(self, root, parent, factory):
@@ -93,6 +97,7 @@ class FileTable(Observer, Subject):
                     #print(fileSet)
                     self.Notify(fileSet)
                 except IOError as e:
+                    print("[IOError]: {} killself".format(self._root))
                     self._KillSelf
                     raise e
 
@@ -141,6 +146,10 @@ class FileTable(Observer, Subject):
             fileList += fileTable.GetFileList()
 
         return fileList
+
+    @property
+    def FTP(self):
+        return self._factory.FTP
 
 
 class FileListTest(unittest.TestCase):

@@ -26,8 +26,9 @@ class Downloader(object):
             # 一个listener对应同一路径名的多个getor
             try:
                 self.listenerDict[DIR]
-            except KeyError:
+            except KeyError as e:
                 # 创建一个新的listener
+                print("[KeyError[: {}, will create new listener.".format(e))
                 self.listenerDict[DIR] = Listener(ftp, DIR, self.lock)
             finally:
                 # 创建一个新的getor，并使之注册同一路径的listener
@@ -44,7 +45,7 @@ class Downloader(object):
 
     @property
     def DownloadDIR(self):
-        raise NotImplementedError
+        raise NotImplementedError("Can't change Downloader DownloadDir.")
 
     @DownloadDIR.setter
     def DwonloadDIR(self, value):
@@ -63,7 +64,8 @@ class NewDownload(object):
         for match in matchList:
             try:
                 getor = NewGetor(self._ftp, match, settings.Download_Dir)
-            except TypeError:
+            except TypeError as e:
+                print("[TypeError]: {}".format(e))
                 continue
 
             self._rootFileTable.Attach(getor)

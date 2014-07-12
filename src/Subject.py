@@ -14,8 +14,8 @@ class Subject(object):
     def Detach(self, o):
         try:
             self.observersSet.remove(o)
-        except KeyError:
-            pass
+        except KeyError as e:
+            print("[KeyError]: {} Observer is not exists in {} Subject".format(o.__class__, self.__class__))
 
     def Notify(self, info=''):
         detachList = []
@@ -26,18 +26,21 @@ class Subject(object):
                 else:
                     detahList.append(observer)
 
-            except NameError:
+            except NameError as e:
+                print("[NameError]: {}".format(e.message))
                 detachList.append(observer)
             except NotImplementedError:
+                print("[NotImplementedError]: {}".format(e.message))
                 detachList.append(observer)
-            except AttributeError:
+            except AttributeError as e:
+                print("[AttributeError]: {}".format(e.message))
                 detachList.append(observer)
 
         for observer in detachList:
             self.Detach(observer)
 
         if not self.HasElements():
-            raise IOError
+            raise IOError("Subject is not any observers.")
 
     def HasElements(self):
         return len(self.observersSet) != 0

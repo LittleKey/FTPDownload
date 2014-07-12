@@ -29,7 +29,7 @@ from os import remove
 class Getor(Observer):
     def __init__(self, ftp, match, remoteDir, localDir=settings.Download_Dir):
         if not isinstance(ftp, FTP):
-            raise TypeError
+            raise TypeError("gave 'ftp' parameters was not FTP.")
 
         super(Getor, self).__init__()
 
@@ -56,20 +56,20 @@ class Getor(Observer):
                 size, filename = apple[:2]
                 self._Download(filename.strip(), int(size))
                 #print(filename, size)
-        except:
-            print("[Error]: has some error in Getor.")
+        except Exception as e:
+            print("[AnyError]: '{}' in Getor.".format(e.message))
             self._KillSelf() # 自杀( 其实只是逃离工作而已
 
-    #@property
-    #def FTP(self):
-    #    return self._ftp
+    @property
+    def FTP(self):
+        return self._ftp
 
-    #@FTP.setter
-    #def FTP(self, value):
-    #    if not isinstance(value, FTP):
-    #        raise TypeError
+    @FTP.setter
+    def FTP(self, value):
+        if not isinstance(value, FTP):
+            raise TypeError
 
-    #    self._ftp = value
+        self._ftp = value
 
     @property
     def DownloadDir(self):

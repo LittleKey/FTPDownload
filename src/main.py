@@ -20,10 +20,11 @@ def Clear(*args):
     for aFile in args:
         try:
             os.remove(aFile)
-        except IOError:
-            print("No such file {}".format(aFile))
-        except NotImplementedError:
-            print("Your platform not support remove.")
+        except OSError as e:
+            print("[FileNotFoundError]: {}".format(e.message))
+        except NotImplementedError as e:
+            print("[NotImplementedError]: {}".format(e.message))
+            #print("Your platform not support remove.")
             return -1
 
 def main(filenameList):

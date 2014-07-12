@@ -26,12 +26,14 @@ class FtpInfo(object):
         if key in self.info.keys():
             self.info[key] = value
         else:
-            raise TypeError
+            raise TypeError("FTP no '{key}' info.".format(key=key))
 
     def GetInfo(self):
         try:
             self.__GetInfoFromFile(settings.FTP_Conf_File)
-        except IOError:
+        except IOError as e:
+            print("[IOError]: {message}".format(e.message))
+            print("Please input in stdin...")
             self.__GetInfoFromInput()
 
     def __GetInfoFromFile(self, ftpConf):
@@ -39,10 +41,9 @@ class FtpInfo(object):
         try:
             with open(ftpConf) as confFile:
                 self.info.update(loads(confFile.read()))
-        except ValueError:
-            print("[ValueError]: '{}' is not json data.".format(ftpConf))
-            print("Please input in stdin...")
-            raise IOError
+        except ValueError as e:
+            print("[ValueError]: {}".format(e))
+            raise IOError("'{file}' is not json data".format(e.message, file=ftpConf))
 
     def __GetInfoFromInput(self):
         # 如果没有配置文件，则改为手动输入

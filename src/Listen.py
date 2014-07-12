@@ -19,7 +19,7 @@ from Observer import Observer
 class Listener(_threading.Thread, Subject):
     def __init__(self, ftp, fileListDir, lock=_threading.Lock()):
         if not isinstance(ftp, FTP):
-            raise TypeError
+            raise TypeError("gave 'ftp' parameters was not FTP.")
 
         #super(Listener, self).__init__()
         Subject.__init__(self)
@@ -45,7 +45,8 @@ class Listener(_threading.Thread, Subject):
                 #super(Listener, self).Notify(self._localFilelist)
                 try:
                     self.Notify(self._localFilelist)
-                except IOError:
+                except IOError as e:
+                    print("[ListenerError]: {e}".format(e.message))
                     exit()
 
             #print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
@@ -53,6 +54,14 @@ class Listener(_threading.Thread, Subject):
 
     def run(self):
         self.Listen()
+
+    def Attach(self, o):
+        if o.FTP != self._ftp:
+            raise("Observer's FTP is not match with Listener's FTP.")
+            #o.FTP = self._ftp
+
+        #super(Listener, self).Attach
+        Subject.Attach(self, o)
 
     @property
     def FtpDir(self):

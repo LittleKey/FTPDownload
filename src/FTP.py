@@ -33,7 +33,7 @@ def RMKDIR(path):
 class FTPFactory(object):
     def __init__(self, ftpInfo=FtpInfo()):
         if not isinstance(ftpInfo, FtpInfo):
-            raise TypeError
+            raise TypeError("Ftp info has any errors.")
 
         self.ftpInfo = ftpInfo
         self.ftpInfo.GetInfo()
@@ -51,8 +51,8 @@ class FTPFactory(object):
             call(['lftp', '--version'])
 
             return LFTP(self.ftpInfo)
-        except IOError:
-            print("[IOError]: No found lftp")
+        except OSError as e:
+            print("[FileNotFoundError]: {}".format(e.message))
             exit(0)
         finally:
             print("\n")
@@ -62,14 +62,14 @@ class FTP(object):
     """其实这应该是抽象类...WTF!!"""
     def __init__(self, ftpInfo):
         if not isinstance(ftpInfo, FtpInfo):
-            raise TypeError
+            raise TypeError("Ftp info has any errors.")
         self.ftpInfo = ftpInfo
 
     def GetList(self, fileListDir):
-        raise NotImplementedError
+        raise NotImplementedError("GetList method has not implemented in This FTP.")
 
     def GetFile(self, filename, filesize, downloadDIR):
-        raise NotImplementedError
+        raise NotImplementedError("GetFile method has not implemented in This FTP.")
 
     @property
     def host(self):

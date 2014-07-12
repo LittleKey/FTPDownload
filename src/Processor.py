@@ -101,7 +101,7 @@ class ProcessorFactory(object):
             return Win32Processor(self.ftpLoginCM, self._filename)
         else:
             print("Not support '{}' platfrom.".format(sysstr))
-            raise SystemError
+            raise SystemError("Not support '{}' platfrom yet".format(sysstr))
 
 
 class ProcessorFactoryTest(unittest.TestCase):
@@ -136,10 +136,11 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
         for filename in filenameList:
             try:
                 remove(filename)
-            except NotImplementedError:
-                print("Your platfrom not support remove.")
-            except OSError:
-                pass
+            except NotImplementedError as e:
+                print("[NotImplementedError]: {}".format(e.message))
+                #print("Your platfrom not support remove.")
+            except OSError as e:
+                print("[FileNotFoundError]: {}".format(e.message))
 
     def __call__(self, command):
         inputFilename = join(gettempdir(), self._filename.GetFilename()) #RandomCode()
@@ -149,7 +150,8 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
             with open(inputFilename, 'w', encoding='utf-8') as confFile:
                 confFile.write(self.ftpLoginCM)
                 confFile.write(command)
-        except TypeError:
+        except TypeError as e:
+            #print("[VersionError]: Can't select encode mode, will use default encode mode.")
             with open(inputFilename, 'w') as confFile:
                 confFile.write(self.ftpLoginCM)
                 confFile.write(command)
@@ -158,10 +160,11 @@ lftp -f "{CONF_Filename}" > "{LOG_Filename}"
             self._Execute(inputFilename, outputFilename)
             with open(outputFilename, encoding='utf-8') as outputFile:
                 return outputFile.read()
-        except TypeError:
+        except TypeError as e:
+            #print("[VersionError]: Can't select encode mode when open file, will select encode mode after opened.")
             with open(outputFilename) as outputFile:
                 return outputFile.read().decode('utf-8')
-        except IOError:
+        except IOError as e:
             print("[IOError]: No such file or directory: {}".format(settings.LOG_Filename))
             exit(0)
         finally:
