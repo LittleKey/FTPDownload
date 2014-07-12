@@ -32,7 +32,7 @@ class FtpInfo(object):
         try:
             self.__GetInfoFromFile(settings.FTP_Conf_File)
         except IOError as e:
-            print("[IOError]: {message}".format(e.message))
+            print("[IOError]: {message}".format(message=e.message))
             print("Please input in stdin...")
             self.__GetInfoFromInput()
 

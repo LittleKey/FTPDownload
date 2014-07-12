@@ -29,7 +29,7 @@ class Subject(object):
             except NameError as e:
                 print("[NameError]: {}".format(e.message))
                 detachList.append(observer)
-            except NotImplementedError:
+            except NotImplementedError as e:
                 print("[NotImplementedError]: {}".format(e.message))
                 detachList.append(observer)
             except AttributeError as e:

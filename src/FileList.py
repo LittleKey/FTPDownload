@@ -160,11 +160,11 @@ class FileListTest(unittest.TestCase):
         self.fileList.Attach(NewGetor(ftp, "abc"))
         c = 0
         l = _threading.activeCount()
-        while c != l:
-            c = l
-            sleep(1)
-            l = _threading.activeCount()
-        pass
+        #while c != l:
+        #    c = l
+        #    sleep(1)
+        #    l = _threading.activeCount()
+        sleep(2)
         self.maxDiff = None
 
     def tearDown(self):
@@ -227,6 +227,9 @@ class FileListTest(unittest.TestCase):
 
         return dirList
 
-if __name__ == '__main__':
+def TestMain():
     unittest.main()
+
+if __name__ == '__main__':
+    TestMain()
 

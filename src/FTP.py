@@ -41,11 +41,13 @@ class FTPFactory(object):
     def GetFTP(self):
         # 暂时只有这一个FTP实现，所以这样写了...
         try:
-            systemName = platform.system().lower()
-            if systemName == "windows":
-                os.environ["PATH"] +=  ";" + settings.LFTP_DIR
-            elif systemName == "linux":
-                os.environ["PATH"] += ":" + settings.LFTP_DIR
+            #systemName = platform.system().lower()
+            #if systemName == "windows":
+            #    os.environ["PATH"] +=  ";" + settings.LFTP_DIR
+            #elif systemName == "linux":
+            #    os.environ["PATH"] += ":" + settings.LFTP_DIR
+
+            os.environ["PATH"] += os.extsep + settings.LFTP_DIR
 
             print("Get lftp version...\n")
             call(['lftp', '--version'])
@@ -177,6 +179,9 @@ class SelfFTP(FTP):
     def __init__(self, ftpInfo):
         super(SelfFTP, self).__init__(ftpInfo)
 
-if __name__ == '__main__':
+def TestMain():
     unittest.main()
+
+if __name__ == '__main__':
+    TestMain()
 

@@ -149,11 +149,15 @@ class NewGetorTest(unittest.TestCase):
 
     def test_Update(self):
         self.getor.Update(self.info)
-        while _threading.activeCount() != 1: sleep(1)
+        #while _threading.activeCount() != 1: sleep(1)
+        sleep(2)
         self.assertTrue(exists('me.jpg'))
         self.assertEqual(6131, getsize('me.jpg'))
         pass
 
-if __name__ == '__main__':
+def TestMain():
     unittest.main()
+
+if __name__ == '__main__':
+    TestMain()
 

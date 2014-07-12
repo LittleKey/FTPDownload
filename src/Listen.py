@@ -46,7 +46,7 @@ class Listener(_threading.Thread, Subject):
                 try:
                     self.Notify(self._localFilelist)
                 except IOError as e:
-                    print("[ListenerError]: {e}".format(e.message))
+                    print("[ListenerError]: {}".format(e.message))
                     exit()
 
             #print("[{ThreadName}]: Wait 5 mins...".format(ThreadName=self.getName()))
@@ -55,13 +55,13 @@ class Listener(_threading.Thread, Subject):
     def run(self):
         self.Listen()
 
-    def Attach(self, o):
-        if o.FTP != self._ftp:
-            raise("Observer's FTP is not match with Listener's FTP.")
-            #o.FTP = self._ftp
-
-        #super(Listener, self).Attach
-        Subject.Attach(self, o)
+    #def Attach(self, o):
+    #    if o.FTP != self._ftp:
+    #        raise("Observer's FTP is not match with Listener's FTP.")
+    #        #o.FTP = self._ftp
+    #
+    #    #super(Listener, self).Attach
+    #    Subject.Attach(self, o)
 
     @property
     def FtpDir(self):
@@ -98,6 +98,9 @@ class ListenerTest(unittest.TestCase):
     def test_Run(self):
         self.assertRaises(SystemExit, self.listen.run)
 
+def TestMain():
+    unittest.main()
 
 if __name__ == '__main__':
-    unittest.main()
+    TestMain()
+

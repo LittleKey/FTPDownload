@@ -197,6 +197,9 @@ class LinuxProcessor(Processor):
     def __init__(self, ftpLoginCM, filename):
         super(LinuxProcessor, self).__init__(ftpLoginCM, filename)
 
-if __name__ == '__main__':
+def TestMain():
     unittest.main()
+
+if __name__ == '__main__':
+    TestMain()
 
