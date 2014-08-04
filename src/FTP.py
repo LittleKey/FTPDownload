@@ -119,6 +119,8 @@ class LFTP(FTP):
     def __GetNewFile(self, filename, downloadDIR, ftpDir):
         args = self.CM["ARGS_New_ts_Get"]
         filename = support2.Join(ftpDir, filename)
+        if support2.Version() == 2:
+            filename = filename.encode('utf-8')
 
         return self.processor(self.CM["CM_LFTP_Get_File"].format(Download_Dir=downloadDIR, \
                                                                args=args, \
