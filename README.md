@@ -29,7 +29,7 @@
   > ftpinfo.json
 
    用于提供ftp的信息，如果没有提供这个文件则会从标准输入获取
-   使用json格式 e.p:
+   使用json格式 e.g:
 
     {
         "host": "ftp://ftp.abc.com:21",
